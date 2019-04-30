@@ -1,0 +1,561 @@
+<nz-modal  [(nzVisible)]="categoryModal" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" nzWidth="800" (nzOnCancel)="categoryModal=false;">
+	<ng-template #modalTitle>
+		所属行业类别及代码
+	</ng-template>
+	<ng-template #modalContent>
+		<form nz-form [nzLayout]="'inline'">
+			<nz-form-item>
+				<nz-form-label>行业编号:</nz-form-label>
+				<nz-form-control>
+					<input nz-input [(ngModel)]="categorySearch.IndustryCode" name="IndustryCode" placeholder="行业编码">
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item>
+				<nz-form-label>行业名称:</nz-form-label>
+				<nz-form-control>
+					<input nz-input [(ngModel)]="categorySearch.IndustryName" name="IndustryName" placeholder="行业名称">
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item>
+				<button nz-button nzType="primary" (click)="categorySch()">查询</button>
+			</nz-form-item>
+			<nz-form-item>
+				<button nz-button nzType="primary" (click)="categorySlct()">确定</button>
+			</nz-form-item>
+		</form>
+		<div style="width:100%;height:10px;"></div>
+		<nz-table #categoryTable
+			nzBordered
+			[nzShowPagination]="false"
+			[nzData]="category.list"
+			class="myTable"
+			>
+			<thead>
+				<tr>
+					<th>选择</th>
+					<th>行业编号</th>
+					<th>行业名称</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let data of categoryTable.data">
+					<td>
+						<input type="radio" name="category" value="{{data.categoryName}}"/>
+					</td>
+					<td>{{data.categoryCode}}</td>
+					<td>{{data.categoryName}}</td>
+				</tr>
+			</tbody>
+		</nz-table>
+		<div style="width:100%;height:10px;"></div>
+		<nz-pagination style="float:right;" [nzPageIndex]="category.curPageIndex" [nzTotal]="category.total" [nzPageSize]="category.pageSize" (nzPageIndexChange)="categoryPageChange($event)"></nz-pagination>
+		<div class="clear"></div>
+	</ng-template>
+
+	<ng-template #modalFooter>
+	<!-- <button nz-button nzType="default" (click)="handleCancel()">Custom Callback</button>
+	<button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Custom Submit</button> -->
+	</ng-template>
+</nz-modal>
+<form nz-form [formGroup]="validateForm">
+	<table class="customTable">
+		<tbody>
+			<tr>
+				<td style="width:240px;">单位名称</td>
+				<td colspan='5'>
+					<nz-form-control>
+						<input nz-input formControlName="CompanyName" [(ngModel)]="company.CompanyName" placeholder="请输入单位名称">
+					</nz-form-control>
+				</td>
+			</tr>
+			<tr>
+				<td>上级公司名称或所属集团总公司名称</td>
+				<td colspan='5'>
+					<nz-form-control>
+						<input nz-input formControlName="ParentCompanyName" [(ngModel)]="company.ParentCompanyName" placeholder="请输入公司名称">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.ParentCompanyName" placeholder="请输入公司名称">-->
+				</td>
+			</tr>
+			<tr>
+				<td>建厂时间</td>
+				<td colspan='5' style="text-align: left;">
+					<nz-form-control>
+						<nz-date-picker style="width:100%;" formControlName="BuildingDate" [(ngModel)]="company.BuildingDate" placeholder="请选择时间"></nz-date-picker>
+					</nz-form-control>
+					<!--<nz-date-picker [(ngModel)]="company.BuildingDate" placeholder="请选择时间"></nz-date-picker>-->
+				</td>
+			</tr>
+			<tr>
+				<td>最近改扩建时间</td>
+				<td colspan='5' style="text-align: left;">
+					<nz-form-control>
+						<nz-date-picker style="width:100%;" formControlName="LastRebuildingDate" [(ngModel)]="company.LastRebuildingDate"
+						 placeholder="请选择时间"></nz-date-picker>
+					</nz-form-control>
+					<!-- <nz-date-picker [(ngModel)]="company.LastRebuildingDate" placeholder="请选择时间"></nz-date-picker> -->
+				</td>
+			</tr>
+			<tr>
+				<td>单位详细地址</td>
+				<td colspan='5'>
+					<div nz-row>
+						<div nz-col nzSpan="12">
+							<div nz-row>
+								<div nz-col nzSpan="8">
+									<nz-form-control>
+										<nz-select formControlName="LocationProvince" [(ngModel)]="company.LocationProvince" (ngModelChange)="provinceChange($event)" style="width:98%; margin-right:3%;" nzPlaceHolder="请选择省">
+											<nz-option [nzValue]="item.code" [nzLabel]="item.name" *ngFor="let item of provinceList"></nz-option>
+										</nz-select>
+									</nz-form-control>
+								</div>
+								<div nz-col nzSpan="8">
+									<nz-form-control>
+										<nz-select formControlName="LocationCity" [(ngModel)]="company.LocationCity" style="width:98%; margin-right:3%;" (ngModelChange)="cityChange($event)" nzPlaceHolder="请选择市">
+											<nz-option [nzValue]="item.code" [nzLabel]="item.name" *ngFor="let item of cityList"></nz-option>
+										</nz-select>
+									</nz-form-control>
+								</div>
+								<div nz-col nzSpan="8">
+									<nz-form-control>
+										<nz-select formControlName="LocationArea" [(ngModel)]="company.LocationArea" style="width:98%; margin-right:3%;" nzPlaceHolder="请选择区">
+											<nz-option [nzValue]="item.code" [nzLabel]="item.name" *ngFor="let item of areaList"></nz-option>
+										</nz-select>
+									</nz-form-control>
+								</div>
+							</div>
+						</div>
+						<div nz-col nzSpan="12">
+							<nz-form-control>
+								<input nz-input formControlName="LocationAddress" [(ngModel)]="company.LocationAddress" placeholder="请填写详细地址">
+							</nz-form-control>
+						</div>
+					</div>
+
+					<!--<div nz-row>
+					<div nz-col nzSpan="8">
+						<nz-select [(ngModel)]="company.LocationProvince" style="width:30%; margin-right:3%;" nzPlaceHolder="请选择省">
+					        <nz-option nzValue="111" nzLabel="111"></nz-option>
+					        <nz-option nzValue="222" nzLabel="222"></nz-option>
+					    </nz-select>
+					    <nz-select [(ngModel)]="company.LocationCity" style="width:30%; margin-right:3%;" nzPlaceHolder="请选择市">
+					        <nz-option nzValue="111" nzLabel="111"></nz-option>
+					        <nz-option nzValue="222" nzLabel="222"></nz-option>
+					    </nz-select>
+					    <nz-select [(ngModel)]="company.LocationArea" style="width:30%; margin-right:3%;" nzPlaceHolder="请选择区">
+					        <nz-option nzValue="111" nzLabel="111"></nz-option>
+					        <nz-option nzValue="222" nzLabel="222"></nz-option>
+					    </nz-select>
+					</div>
+					<div nz-col nzSpan="16">
+						<input nz-input [(ngModel)]="company.LocationAddress" placeholder="请填写详细地址">
+					</div>
+			  </div>-->
+				</td>
+			</tr>
+			<tr>
+				<td>主要经营范围</td>
+				<td colspan='5'>
+					<nz-form-control>
+						<input nz-input formControlName="BusinessScope" [(ngModel)]="company.BusinessScope" placeholder="请输入主要经营范围">
+					</nz-form-control>
+				</td>
+			</tr>
+			<tr>
+				<td>统一社会信用代码</td>
+				<td colspan='5'>
+					<nz-form-control>
+						<input nz-input formControlName="SocialCreditCode" [(ngModel)]="company.SocialCreditCode" maxlength="18"
+						 placeholder="请输入统一社会信用代码">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.SocialCreditCode" placeholder="请输入统一社会信用代码">-->
+				</td>
+			</tr>
+			<tr>
+				<td>所属行业类别及代码</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<nz-input-group nzSearch nzSize="default" [nzAddOnAfter]="slctCategoryBtn">
+							<input nz-input formControlName="IndustryCategory" [(ngModel)]="company.IndustryCategory" disabled="true" placeholder="请选择所属行业类别">
+						</nz-input-group>
+						<ng-template #slctCategoryBtn>
+					    	<span (click)="showCategory()" style="cursor: pointer;">选择</span>
+					    </ng-template>
+						<!-- <nz-select formControlName="IndustryCategory" [(ngModel)]="company.IndustryCategory" style="width: 100%;"
+						 nzPlaceHolder="请选择所属行业类别及代码">
+							<nz-option nzValue="111" nzLabel="111"></nz-option>
+							<nz-option nzValue="222" nzLabel="222"></nz-option>
+						</nz-select> -->
+					</nz-form-control>
+					<!--<nz-select [(ngModel)]="company.IndustryCategory" style="width: 100%;" nzPlaceHolder="请选择所属行业类别及代码">
+			        <nz-option nzValue="111" nzLabel="111"></nz-option>
+			        <nz-option nzValue="222" nzLabel="222"></nz-option>
+		      	</nz-select>-->
+				</td>
+				<td>所在工业园区</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="IndustrialPark" [(ngModel)]="company.IndustrialPark" placeholder="请输入所在工业园区">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.IndustrialPark" placeholder="请输入所在工业园区">-->
+				</td>
+			</tr>
+			<tr>
+				<td>设计生产能力/年</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="DesignProduce" [(ngModel)]="company.DesignProduce" placeholder="请输入生产能力">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.DesignProduce" placeholder="请输入生产能力">-->
+				</td>
+				<td>实际生产量/年</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="AgedProduce" [(ngModel)]="company.AgedProduce" placeholder="请输入实际生产力量">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.AgedProduce" placeholder="请输入实际生产力量">-->
+				</td>
+			</tr>
+			<tr>
+				<td>职工人数(人)</td>
+				<td colspan='2'>
+					<!--<nz-input-number [nzMin]="1" [nzStep]="1" [nzFormatter]="formatterPeople" [nzParser]="parserPeople"></nz-input-number>-->
+					<nz-form-control>
+						<nz-input-group nzAddOnAfter="(人)">
+							<input nz-input formControlName="EmployeesNumber" [(ngModel)]="company.EmployeesNumber" placeholder="请填写职工人数">
+						</nz-input-group>
+					</nz-form-control>
+
+					<!--<nz-input-group nzAddOnAfter="(人)">
+					<input nz-input [(ngModel)]="company.EmployeesNumber" placeholder="请填写职工人数">
+				</nz-input-group>-->
+				</td>
+				<td>厂区占地面积</td>
+				<td colspan='2'>
+					<!--<nz-input-number [nzMin]="1" [nzStep]="1" [nzFormatter]="formatterMSquare" [nzParser]="parserMSquare"></nz-input-number>-->
+					<nz-form-control>
+						<nz-input-group nzAddOnAfter="(㎡)">
+							<input nz-input formControlName="FactoryArea" [(ngModel)]="company.FactoryArea" placeholder="请填写占地面积">
+						</nz-input-group>
+					</nz-form-control>
+					<!--<nz-input-group nzAddOnAfter="(㎡)">
+					<input nz-input [(ngModel)]="company.FactoryArea" placeholder="请填写占地面积">
+				</nz-input-group>-->
+				</td>
+			</tr>
+			<tr>
+				<td>中心经度</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="CenterLongitude" [(ngModel)]="company.CenterLongitude" placeholder="请选择中心经度">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.CenterLongitude" placeholder="请选择中心经度">-->
+				</td>
+				<td>中心维度</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="CenterLatitude" [(ngModel)]="company.CenterLatitude" placeholder="请选择中心维度">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.CenterLatitude" placeholder="请选择中心维度">-->
+				</td>
+			</tr>
+			<tr>
+				<td>法定代表人</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="LegalPerson" [(ngModel)]="company.LegalPerson" placeholder="请填写法定代表人">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.LegalPerson" placeholder="请填写法定代表人">-->
+				</td>
+				<td>联系人</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="ContactPerson" [(ngModel)]="company.ContactPerson" placeholder="请填写联系人">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.ContactPerson" placeholder="请填写联系人">-->
+				</td>
+			</tr>
+			<tr>
+				<td>邮政编码</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="PostalCode" [(ngModel)]="company.PostalCode" placeholder="请填写邮政编码">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.PostalCode" placeholder="请填写邮政编码">-->
+				</td>
+				<td>联系电话</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="ContactNumber" [(ngModel)]="company.ContactNumber" placeholder="请填写联系电话">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.ContactNumber" placeholder="请填写联系电话">-->
+				</td>
+			</tr>
+			<tr>
+				<td>废水排量/年</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<nz-input-group nzAddOnAfter="(吨)">
+							<input nz-input formControlName="WastewaterDischarge" [(ngModel)]="company.WastewaterDischarge" placeholder="请填写废水排量">
+						</nz-input-group>
+					</nz-form-control>
+
+					<!--<nz-input-group nzAddOnAfter="(吨)">
+					<input nz-input [(ngModel)]="company.WastewaterDischarge" placeholder="请填写废水排量">
+				</nz-input-group>-->
+				</td>
+				<td>废水排放去向</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="WastewaterGo" [(ngModel)]="company.WastewaterGo" placeholder="请选择废水排放去向">
+					</nz-form-control>
+					<!--<input nz-input [(ngModel)]="company.WastewaterGo" placeholder="请选择废水排放去向">-->
+				</td>
+			</tr>
+			<tr>
+				<td>有无危废生产</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<nz-select style="width: 100%;" formControlName="WasteGenerated" [(ngModel)]="company.WasteGenerated"
+						 nzPlaceHolder="请选择有无危废产生">
+							<nz-option nzValue="1" nzLabel="有"></nz-option>
+							<nz-option nzValue="0" nzLabel="无"></nz-option>
+						</nz-select>
+					</nz-form-control>
+					<!--<nz-select style="width: 100%;" [(ngModel)]="company.WasteGenerated" nzPlaceHolder="请选择有无危废产生">
+			        <nz-option nzValue="有" nzLabel="有"></nz-option>
+			        <nz-option nzValue="无" nzLabel="无"></nz-option>
+		      	</nz-select>-->
+				</td>
+				<td>危废名称</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="WasteGeneratedName" [(ngModel)]="company.WasteGeneratedName" placeholder="请填写危废名称">
+					</nz-form-control>
+
+					<!--<input nz-input [(ngModel)]="company.WasteGeneratedName" placeholder="请填写危废名称">-->
+				</td>
+			</tr>
+			<!-- <tr>
+				<td>上年度应急专项经费投入(万元)</td>
+				<td colspan='5'>
+					<nz-form-control>
+						<input nz-input formControlName="SpecialEmergencyFund" [(ngModel)]="company.SpecialEmergencyFund" placeholder="请填写经费投入">
+					</nz-form-control>
+				</td>
+			</tr>
+			<tr>
+				<td>监测执行单位</td>
+				<td colspan='5'>
+					<div nz-row>
+						<div nz-col nzSpan="8" style="padding-right:10px;">
+							<nz-form-control>
+								<nz-select formControlName="MonitoringCapability" [(ngModel)]="company.MonitoringCapability" style="width:100%;"
+								 nzPlaceHolder="请选择监测执行单位">
+									<nz-option nzValue="1" nzLabel="本企业自身有监测能力"></nz-option>
+									<nz-option nzValue="0" nzLabel="本企业自身无监测能力"></nz-option>
+								</nz-select>
+							</nz-form-control>
+						</div>
+						<div nz-col nzSpan="16" *ngIf="company.MonitoringCapability==0 || company.MonitoringCapability=='0'">
+							<nz-form-control>
+								<input nz-input formControlName="MonitoringUnit" [(ngModel)]="company.MonitoringUnit" placeholder="请填写协议单位名称">
+							</nz-form-control>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>是否已经开展救援应急演练</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<nz-select formControlName="StartEmergencyRescueDrill" [(ngModel)]="company.StartEmergencyRescueDrill" style="width: 100%;"
+						 nzPlaceHolder="请选择是否开展应急演练">
+							<nz-option nzValue="1" nzLabel="是"></nz-option>
+							<nz-option nzValue="0" nzLabel="否"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</td>
+				<td>救援应急演练频次(次/年)</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="EmergencyDrillNumber" [(ngModel)]="company.EmergencyDrillNumber" placeholder="请填写救援应急演练频次">
+					</nz-form-control>
+				</td>
+			</tr>
+			<tr>
+				<td>上次应急演练时间</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<nz-date-picker formControlName="EmergencyDrillTime" [(ngModel)]="company.EmergencyDrillTime" placeholder="请选择时间"></nz-date-picker>
+					</nz-form-control>
+				</td>
+				<td>参与演练人员数量</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<input nz-input formControlName="TheNumberOfEmergencyDrill" [(ngModel)]="company.TheNumberOfEmergencyDrill"
+						 placeholder="请填写参与演练人员数量">
+					</nz-form-control>
+				</td>
+			</tr>
+			<tr>
+				<td>厂区是否装备风向标</td>
+				<td colspan='2'>
+					<nz-form-control>
+						<nz-select formControlName="WindVane" [(ngModel)]="company.WindVane" style="width: 100%;" nzPlaceHolder="请选择厂区是否装备风向标">
+							<nz-option nzValue="1" nzLabel="是"></nz-option>
+							<nz-option nzValue="0" nzLabel="否"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</td>
+				<td colspan='3'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+			</tr> -->
+			<tr>
+				<td>历史环境事故发生情况</td>
+				<td colspan='3'>
+					<nz-form-control>
+						<nz-select formControlName="EnvironmentalAccidents" [(ngModel)]="company.EnvironmentalAccidents" style="width: 100%;" nzPlaceHolder="请选择">
+							<nz-option nzValue="1" nzLabel="有"></nz-option>
+							<nz-option nzValue="0" nzLabel="无"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</td>
+				<td colspan='2'>
+					<div nz-row>
+						<div nz-col nzSpan="8">
+							<nz-form-control>
+								<label nz-checkbox nzValue="0" formControlName="Fire" [(ngModel)]="company.Fire" [nzDisabled]="company.EnvironmentalAccidents==0 || company.EnvironmentalAccidents=='0'">火灾</label>
+								<!--Fire-->
+							</nz-form-control>
+						</div>
+						<div nz-col nzSpan="16">
+							<nz-form-control>
+								<nz-input-group nzAddOnAfter="(次)">
+									<input nz-input formControlName="FireNumber" [(ngModel)]="company.FireNumber"  attr.disabled="{{company.EnvironmentalAccidents==0 || company.EnvironmentalAccidents=='0'}}">
+								</nz-input-group>
+							</nz-form-control>
+						</div>
+					</div>
+					<div nz-row style="margin-top:10px;">
+						<div nz-col nzSpan="8">
+							<nz-form-control>
+								<label nz-checkbox nzValue="0" formControlName="Explosion" [(ngModel)]="company.Explosion" [nzDisabled]="company.EnvironmentalAccidents==0 || company.EnvironmentalAccidents=='0'">爆照</label>
+								<!--Explosion-->
+							</nz-form-control>
+						</div>
+						<div nz-col nzSpan="16">
+							<nz-form-control>
+								<nz-input-group nzAddOnAfter="(次)">
+									<input nz-input formControlName="ExplosionNumber" [(ngModel)]="company.ExplosionNumber" attr.disabled="{{company.EnvironmentalAccidents==0 || company.EnvironmentalAccidents=='0'}}">
+								</nz-input-group>
+							</nz-form-control>
+						</div>
+					</div>
+					<div nz-row style="margin-top:10px;">
+						<div nz-col nzSpan="8">
+							<nz-form-control>
+								<label nz-checkbox nzValue="0" formControlName="Reveal" [(ngModel)]="company.Reveal" [nzDisabled]="company.EnvironmentalAccidents==0 || company.EnvironmentalAccidents=='0'">泄露</label>
+								<!--Reveal-->
+							</nz-form-control>
+						</div>
+						<div nz-col nzSpan="16">
+							<nz-form-control>
+								<nz-input-group nzAddOnAfter="(次)">
+									<input nz-input formControlName="RevealNumber" [(ngModel)]="company.RevealNumber" attr.disabled="{{company.EnvironmentalAccidents==0 || company.EnvironmentalAccidents=='0'}}">
+								</nz-input-group>
+							</nz-form-control>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>环评及批复文件的各项环境风险防控和应急措施</td>
+				<td colspan='5'>
+					<nz-form-control>
+						<textarea nz-input rows="5" formControlName="PreventionControl" [(ngModel)]="company.PreventionControl"></textarea>
+					</nz-form-control>
+				</td>
+			</tr>
+			<tr>
+				<td>项目批复文号（包括立项、环评、环保验收）</td>
+				<td colspan='5'>
+					<nz-form-control>
+						<textarea nz-input rows="5" formControlName="ApprovalNumber" [(ngModel)]="company.ApprovalNumber"></textarea>
+					</nz-form-control>
+				</td>
+			</tr>
+			<tr>
+				<td>企业地理位置图</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+				<td>周边环境风险受体分布图</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+			</tr>
+			<tr>
+				<td>厂区平面布置图</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+				<td>企业雨水、清净下水收集和排放管网图</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+			</tr>
+			<tr>
+				<td>污水收集和排放管网图</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+				<td>其他所有排水最终去向图</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+			</tr>
+			<tr>
+				<td>环评审批手续</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+				<td>验收手续</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+			</tr>
+			<tr>
+				<td>营业执照</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+				<td>环境应急资源分布图</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+			</tr>
+			<tr>
+				<td>环境风险物质分布图</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+				<td>企业及周边区域人员撤离线路图</td>
+				<td colspan='2'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">其他文件</td>
+				<td colspan='4'>
+					<button nz-button nzType="default">预览(0)</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

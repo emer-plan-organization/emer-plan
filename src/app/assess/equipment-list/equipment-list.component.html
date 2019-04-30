@@ -1,0 +1,58 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th>设备名称</th>
+			<th>型号</th>
+			<th>数量</th>
+			<th width="120px">
+				是否属于国家规定限期淘汰的设备
+				<br/>
+				<span style="color:#FF7256;">查看对照表</span>
+			</th>
+			<th width="80px">操作</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+	  		<col width="120px"/>
+	  		<col width="80px"/>
+	  	</colgroup>
+	    <tbody>
+	  		<tr *ngFor="let item of tableData;index as i">
+					<td>{{i+1}}</td>
+					<td>
+						<input nz-input [(ngModel)]="item.equipmentName" placeholder="请输入设备名称">
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.equipmentModel" placeholder="请输入型号">
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.equipmentNumber" placeholder="请输入数量">
+					</td>
+					<td>
+						<nz-radio-group [(ngModel)]="item.isTimeOut">
+							<label nz-radio nzValue="1">是</label>
+							<label nz-radio nzValue="0">否</label>
+						</nz-radio-group>
+					</td>
+					<td>
+						<img src="/assets/img/add.png" class="operImg" *ngIf="i==tableData.length-1" (click)="addParent()"/>
+            <img src="/assets/img/addn.png" class="operImg" *ngIf="i<tableData.length-1"/>
+						<img src="/assets/img/del.png" class="operImg" (click)="delParent(i)"/>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

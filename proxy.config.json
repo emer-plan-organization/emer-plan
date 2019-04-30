@@ -1,0 +1,13 @@
+{
+	"/ecp":{
+		"target":"http://ecp.easy.echosite.cn",
+    "changeOrigin": true
+	},
+	"/ahj":{
+		"target":"https://api.anhuanjia.com",
+		"pathRewrite": {
+		  "^/ahj": ""
+		},
+		"changeOrigin": true
+	}
+}

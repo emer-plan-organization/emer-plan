@@ -1,0 +1,90 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th>生产工艺名称</th>
+			<th width="150px">套数</th>
+			<th width="200px">涉及工艺</th>
+			<th width="150px">
+				是否属于其他高温或高压、涉及易燃易爆等物质的工艺过程
+				<br/>
+				<span style="color:#FF7256;">查看对照表</span>
+			</th>
+			<th width="150px">
+				是否属于国家规定限期淘汰的工艺名录和设备
+				<br/>
+				<span style="color:#FF7256;">查看对照表</span>
+			</th>
+			<th width="80px">操作</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col/>
+	  		<col width="150px"/>
+	  		<col width="200px"/>
+	  		<col width="150px"/>
+	  		<col width="150px"/>
+	  		<col width="80px"/>
+	  	</colgroup>
+	    <tbody>
+        <tr *ngFor="let item of tableData;index as i">
+          <td>{{i+1}}</td>
+          <td>
+            <input nz-input [(ngModel)]="item.productionProcessName" placeholder="请输入生产工艺名称">
+          </td>
+          <td>
+            <input nz-input [(ngModel)]="item.processNumber" placeholder="请输入套数">
+          </td>
+          <td>
+            <nz-select  [(ngModel)]="item.processArray" nzMode="multiple" nzPlaceHolder="请选择" style="width:100%;">
+              <nz-option nzValue="光气及光气化工艺" nzLabel="光气及光气化工艺"></nz-option>
+              <nz-option nzValue="电解工艺（氯碱）" nzLabel="电解工艺（氯碱）"></nz-option>
+              <nz-option nzValue="氯化工艺" nzLabel="氯化工艺"></nz-option>
+              <nz-option nzValue="硝化工艺" nzLabel="硝化工艺"></nz-option>
+              <nz-option nzValue="合成氨工艺" nzLabel="合成氨工艺"></nz-option>
+              <nz-option nzValue="裂解（裂化）工艺" nzLabel="裂解（裂化）工艺"></nz-option>
+              <nz-option nzValue="氟化工艺" nzLabel="氟化工艺"></nz-option>
+              <nz-option nzValue="加氢工艺" nzLabel="加氢工艺"></nz-option>
+              <nz-option nzValue="重氮化工艺" nzLabel="重氮化工艺"></nz-option>
+              <nz-option nzValue="氧化工艺" nzLabel="氧化工艺"></nz-option>
+              <nz-option nzValue="过氧化工艺" nzLabel="过氧化工艺"></nz-option>
+              <nz-option nzValue="胺基化工艺" nzLabel="胺基化工艺"></nz-option>
+              <nz-option nzValue="磺化工艺" nzLabel="磺化工艺"></nz-option>
+              <nz-option nzValue="聚合工艺" nzLabel="聚合工艺"></nz-option>
+              <nz-option nzValue="烷基化工艺" nzLabel="烷基化工艺"></nz-option>
+              <nz-option nzValue="新型煤化工工艺" nzLabel="新型煤化工工艺"></nz-option>
+              <nz-option nzValue="电石生产工艺" nzLabel="电石生产工艺"></nz-option>
+              <nz-option nzValue="偶氮化工艺" nzLabel="偶氮化工艺"></nz-option>
+              <nz-option nzValue="其他工艺" nzLabel="其他工艺"></nz-option>
+            </nz-select>
+          </td>
+          <td>
+            <nz-radio-group [(ngModel)]="item.isOtherCrafts">
+              <label nz-radio nzValue="1">是</label>
+              <label nz-radio nzValue="0">否</label>
+            </nz-radio-group>
+          </td>
+          <td>
+            <nz-radio-group [(ngModel)]="item.isTimeOut">
+              <label nz-radio nzValue="1">是</label>
+              <label nz-radio nzValue="0">否</label>
+            </nz-radio-group>
+          </td>
+          <td>
+            <img src="/assets/img/add.png" class="operImg" *ngIf="i==tableData.length-1" (click)="addParent()"/>
+            <img src="/assets/img/addn.png" class="operImg" *ngIf="i<tableData.length-1"/>
+            <img src="/assets/img/del.png" class="operImg" (click)="delParent(i)"/>
+          </td>
+        </tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

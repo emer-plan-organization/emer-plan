@@ -1,0 +1,68 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th rowspan="2" width="80px">序号</th>
+			<th rowspan="2">突发环境事件</th>
+			<th rowspan="2">环境风险物质</th>
+			<th rowspan="2">释放条件</th>
+			<th colspan="3">可能影响范围</th>
+			<th rowspan="2">环境风险与应急措施关键环节</th>
+			<th rowspan="2">环境应急资源情况分析</th>
+			<th rowspan="2" width="17px"></th>
+		</tr>
+		<tr>
+			<th>紧急隔离距离(m)</th>
+			<th>下风向人员防护距离(m)</th>
+			<th>可能影响的环境受体</th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col/>
+				<col/>
+				<col/>
+				<col/>
+	  		<col/>
+				<col/>
+				<col/>
+				<col/>
+	  	</colgroup>
+	    <tbody>
+				<tr *ngFor="let item of tableData;index as i">
+					<td>{{i+1}}</td>
+					<td>{{item.scenarioAnalysis}}</td>
+					<td>
+						{{item.riskSubstanceName}}
+					</td>
+					<td>
+						<textarea nz-input rows="5" [(ngModel)]="item.releaseConditions" placeholder="具体情况说明"></textarea>
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.isolationDistance" placeholder="请输入紧急隔离距离">
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.protectionDistance" placeholder="请输入下风向人员防护距离">
+					</td>
+					<td>
+						<nz-select nzMode="multiple" [(ngModel)]="item.environmentalReceptorsArray" style="width:100%;" nzPlaceHolder="请选择">
+							<nz-option [nzValue]="acceptor.pointName" [nzLabel]="acceptor.pointName" *ngFor="let acceptor of acceptorList"></nz-option>
+							<nz-option nzValue="无" nzLabel="无"></nz-option>
+						</nz-select>
+					</td>
+					<td>
+						<textarea nz-input rows="5" [(ngModel)]="item.keyLink" placeholder="具体情况说明"></textarea>
+					</td>
+					<td>
+						<textarea nz-input rows="5" [(ngModel)]="item.situationAnalysis" placeholder="具体情况说明"></textarea>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

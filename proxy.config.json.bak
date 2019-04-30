@@ -1,0 +1,17 @@
+{
+	
+	"/ecp":{
+		"target":"http://192.168.1.23:9000"
+	},
+	"/ecp1":{
+		"target":"http://ecp.easy.echosite.cn",
+		"changeOrigin": true
+	},
+	"/ahj":{
+		"target":"https://api.anhuanjia.com",
+		"pathRewrite": {
+		  "^/ahj": ""
+		},
+		"changeOrigin": true
+	}
+}

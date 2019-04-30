@@ -1,0 +1,85 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th rowspan="2">项目名称</th>
+			<th rowspan="2">具体内容</th>
+			<th rowspan="2">目前存在的问题</th>
+			<th rowspan="2">涉及环境风险单元</th>
+			<th rowspan="2">涉及环境风险物质</th>
+			<th rowspan="2">可能影响的环境风险受体</th>
+			<th rowspan="2">整改措施</th>
+			<th colspan="2">负责人</th>
+			<th colspan="2">整改期限</th>
+			<th colspan="2" width="17px"></th>
+		</tr>
+		<tr>
+			<th>姓名</th>
+			<th>电话</th>
+			<th>完成日期</th>
+			<th>短期/中期/长期</th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+			<col />
+			<col />
+			<col />
+			<col />
+			<col />
+			<col />
+			<col />
+			<col />
+			<col />
+			<col />
+			<col />
+		</colgroup>
+		<tbody>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<nz-select nzMode="multiple" style="width:100%;" nzPlaceHolder="请选择">
+						<nz-option [nzValue]="1" nzLabel="111"></nz-option>
+						<nz-option [nzValue]="2" nzLabel="222"></nz-option>
+						<nz-option [nzValue]="3" nzLabel="333"></nz-option>
+					</nz-select>
+				</td>
+				<td>
+					<nz-select nzMode="multiple" style="width:100%;" nzPlaceHolder="请选择">
+						<nz-option [nzValue]="1" nzLabel="111"></nz-option>
+						<nz-option [nzValue]="2" nzLabel="222"></nz-option>
+						<nz-option [nzValue]="3" nzLabel="333"></nz-option>
+					</nz-select>
+				</td>
+				<td>
+					<nz-select nzMode="multiple" style="width:100%;" nzPlaceHolder="请选择">
+						<nz-option [nzValue]="1" nzLabel="111"></nz-option>
+						<nz-option [nzValue]="2" nzLabel="222"></nz-option>
+						<nz-option [nzValue]="3" nzLabel="333"></nz-option>
+					</nz-select>
+				</td>
+				<td>
+					<textarea nz-input rows="5" placeholder="具体情况说明"></textarea>
+				</td>
+				<td>
+					<nz-select nzMode="multiple" style="width:100%;" nzPlaceHolder="请选择">
+						<nz-option [nzValue]="1" nzLabel="张三"></nz-option>
+						<nz-option [nzValue]="2" nzLabel="李四"></nz-option>
+					</nz-select>
+				</td>
+				<td>
+					<input nz-input [disabled]="true" placeholder="">
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary">保存</button>
+	<button nz-button>下一步</button>
+</div>

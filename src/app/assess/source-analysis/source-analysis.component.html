@@ -1,0 +1,174 @@
+<nz-modal [(nzVisible)]="physicalAndChemicalModal" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+ nzWidth="800" (nzOnCancel)="physicalAndChemicalModal=false;">
+	<ng-template #modalTitle>
+		理化性质查询参考表
+	</ng-template>
+	<ng-template #modalContent>
+		<form nz-form [nzLayout]="'inline'">
+			<nz-form-item>
+				<nz-form-label>中文名/英文名/CAS号:</nz-form-label>
+				<nz-form-control>
+					<input nz-input [(ngModel)]="physicalAndChemicalSearch.name" name="name" placeholder="中文名/英文名/CAS号">
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item>
+				<button nz-button nzType="primary" (click)="physicalAndChemicalSch()">查询</button>
+			</nz-form-item>
+		</form>
+		<nz-collapse nzAccordion>
+			<nz-collapse-panel nzHeader="第一部分:化学品名称" [nzActive]="true">
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">化学品中文名字：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.ChemicalsChinese}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">化学品英文名字：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.ChemicalsEnglish}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">中文名称2：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.ChemicalsChinese2}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">英文名称2：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.ChemicalsEnglish2}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">技术说明书编码：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.TechnicalInstructionsCode}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">CAS No：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.CasNo}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">分子式：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.MolecularFormula}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">分子量：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.MolecularWeight}}</div>
+				</div>
+			</nz-collapse-panel>
+			<nz-collapse-panel nzHeader="第二部分:成分/组成信息" [nzActive]="false">
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">有害物成分：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.HarmfulComponents}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">含量：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.HarmfulSubstanceContent}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">CAS No：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.HarmfulSubstanceCasNo}}</div>
+				</div>
+			</nz-collapse-panel>
+			<nz-collapse-panel nzHeader="第三部分:危险性描述" [nzActive]="false">
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">危险性类别：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.HazardIdentification}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">侵入途径：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.InvasionPathway}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">健康危害：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.HealthHazard}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">环境危害：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.EnvironmentalHazards}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">燃爆危险：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.RiskOfExplosion}}</div>
+				</div>
+			</nz-collapse-panel>
+			<nz-collapse-panel nzHeader="第四部分:急救措施" [nzActive]="false">
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">皮肤接触：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.SkinContact}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">眼睛接触：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.EyeContact}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">吸入：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.Inhalation}}</div>
+				</div>
+				<div nz-row class="fieldKeyValueShow">
+					<div nz-col nzSpan="5">食入：</div>
+					<div nz-col nzSpan="19">{{physicalAndChemical.Ingestion}}</div>
+				</div>
+			</nz-collapse-panel>
+		</nz-collapse>
+	</ng-template>
+
+	<ng-template #modalFooter>
+	</ng-template>
+</nz-modal>
+
+
+
+<div class="titleBtn">
+	<button nz-button nzType="primary" (click)="physicalAndChemicalModal=true;">理化性质数据库</button>
+	<button nz-button nzType="primary">泄漏量计算</button>
+	<button nz-button nzType="primary">火灾爆炸事故源强计算</button>
+</div>
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th>突发环境事件</th>
+			<th>物质名称</th>
+			<th>事故位置</th>
+			<th>污染类型</th>
+			<th>源强分析</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+			<col width="80px" />
+			<col />
+			<col />
+			<col />
+			<col />
+			<col />
+		</colgroup>
+		<tbody>
+			<tr *ngFor="let item of tableData;index as i">
+				<td>{{i+1}}</td>
+				<td>
+					<textarea nz-input [(ngModel)]="item.scenarioAnalysis" rows="5"></textarea>
+				</td>
+				<td>
+					<input nz-input [(ngModel)]="item.riskSubstanceName" placeholder="">
+				</td>
+				<td>
+					<input nz-input [(ngModel)]="item.accidentLocation" placeholder="">
+				</td>
+				<td>
+					<nz-select nzMode="multiple" [(ngModel)]="item.pollutionTypesArray" style="width:100%;" nzPlaceHolder="请选择">
+						<nz-option nzValue="水污染" nzLabel="水污染"></nz-option>
+						<nz-option nzValue="土壤污染" nzLabel="土壤污染"></nz-option>
+						<nz-option nzValue="大气污染" nzLabel="大气污染"></nz-option>
+					</nz-select>
+				</td>
+				<td>
+					<textarea nz-input [(ngModel)]="item.sourceStrengthAnalysis" rows="5" placeholder="请填写强源分析"></textarea>
+				</td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

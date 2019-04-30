@@ -1,0 +1,9 @@
+<div style="width:100%;height:100%;padding:10px;">
+	<div *ngFor="let img of imgList" (dbclick)="showImg(img)" style="position:relative">
+		<i nz-icon type="close" theme="outline" style="position:absolute;top:0px;right:0px;" (click)="delImgFuc(img)"></i>
+		<img src="{{img.url}}" width="86" height="86"/>
+	</div>
+	<div *ngIf="curImg!=null">
+		<img src="{{curImg.url}}" style="max-height:100%;max-width:100%;"/>
+	</div>
+</div>

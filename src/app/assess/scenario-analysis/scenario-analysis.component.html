@@ -1,0 +1,75 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th width="200px">环境事件类型</th>
+			<th width="100px">有/无</th>
+			<th>环境风险物质名称</th>
+			<th>事故位置</th>
+			<th>最坏情景分析</th>
+			<th width="80px">操作</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col width="200px"/>
+				<col width="100px"/>
+				<col/>
+				<col/>
+	  		<col/>
+	  		<col width="80px"/>
+	  	</colgroup>
+	    <tbody>
+			<ng-container *ngFor="let item of tableData;index as i">
+				<tr *ngFor="let cItem of item.childList;index as j">
+					<td *ngIf="j==0" [attr.rowspan]="item.childList.length">
+						{{i+1}}
+					</td>
+					<td *ngIf="j==0" [attr.rowspan]="item.childList.length">
+						{{item.type}}
+					</td>
+					<td *ngIf="j==0" [attr.rowspan]="item.childList.length">
+						<nz-select [(ngModel)]="item.have" (ngModelChange)="onHaveChange(item,$event)" style="width: 100%;" nzPlaceHolder="请选择">
+							<nz-option nzValue="1" nzLabel="有"></nz-option>
+							<nz-option nzValue="0" nzLabel="无"></nz-option>
+						</nz-select>
+					</td>
+					<td>
+						<nz-select [(ngModel)]="cItem.riskSubstanceName" *ngIf="item.have!='0'" style="width: 100%;" nzPlaceHolder="请选择">
+							<nz-option [nzValue]="risk.mainIngredient" [nzLabel]="risk.mainIngredient" *ngFor="let risk of riskList"></nz-option>
+						</nz-select>
+						<ng-container  *ngIf="item.have=='0'">
+							{{cItem.riskSubstanceName}}
+						</ng-container>
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="cItem.accidentLocation" *ngIf="item.have!='0'" placeholder="">
+						<ng-container  *ngIf="item.have=='0'">
+							{{cItem.accidentLocation}}
+						</ng-container>
+					</td>
+					<td>
+						<textarea nz-input [(ngModel)]="cItem.scenarioAnalysis" *ngIf="item.have!='0'" rows="5" placeholder="具体情况说明"></textarea>
+						<ng-container  *ngIf="item.have=='0'">
+							{{cItem.scenarioAnalysis}}
+						</ng-container>
+					</td>
+					<td>
+						<img src="/assets/img/add.png" class="operImg" *ngIf="j==item.childList.length-1 && item.have!='0'" (click)="addChildren(i)"/>
+						<img src="/assets/img/addn.png" class="operImg" *ngIf="j<item.childList.length-1 || item.have=='0'"/>
+						<img src="/assets/img/del.png" class="operImg" *ngIf="j>0" (click)="delChildren(i,j)"/>
+						<img src="/assets/img/deln.png" class="operImg" *ngIf="j==0"/>
+					</td>
+				</tr>
+			</ng-container>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

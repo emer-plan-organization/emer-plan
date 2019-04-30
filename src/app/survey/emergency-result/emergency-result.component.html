@@ -1,0 +1,14 @@
+<table class="customTable">
+	<tbody>
+		<tr>
+			<td style="width:180px;">应急资源调查分析结果</td>
+			<td>
+				<textarea nz-input [(ngModel)]="result" rows="5" [ngClass]="{'falseDisable':isFirstTime}" (focus)="resultFocus()"></textarea>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="submit()">提交</button>
+</div>

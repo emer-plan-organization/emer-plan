@@ -1,0 +1,246 @@
+<nz-modal  [(nzVisible)]="atmosphereModal" [nzTitle]="modalAtmosphereTitle" [nzContent]="modalAtmosphereContent" [nzFooter]="modalAtmosphereFooter" nzWidth="450" (nzOnCancel)="atmosphereModal=false;">
+  <ng-template #modalAtmosphereTitle>
+    大气环境要素对应的类别选择项
+  </ng-template>
+  <ng-template #modalAtmosphereContent>
+    <nz-checkbox-group class="customCheckboxGroup" [(ngModel)]="atmosphereCategoryCheckOption" (ngModelChange)="atmosphereCategoryCheckOptionChange()"></nz-checkbox-group>
+  </ng-template>
+  <ng-template #modalAtmosphereFooter>
+      <button nz-button nzType="default" (click)="atmosphereModal=false;">取消</button>
+      <button nz-button nzType="primary" (click)="doSlctAtmosphere()">确定</button>
+  </ng-template>
+</nz-modal>
+
+
+<nz-modal  [(nzVisible)]="waterModal" [nzTitle]="modalWaterTitle" [nzContent]="modalWaterContent" [nzFooter]="modalWaterFooter" nzWidth="800" (nzOnCancel)="waterModal=false;">
+  <ng-template #modalWaterTitle>
+    水环境要素对应的类别选择项
+  </ng-template>
+  <ng-template #modalWaterContent>
+    <h3>1.企业雨水排口、清净废水排口、污水排口下游10公里流经范围内有如下一类或多类环境风险受体</h3>
+    <nz-checkbox-group class="customCheckboxGroup" [(ngModel)]="waterCategoryCheckOption.option1" (ngModelChange)="waterCategoryCheckOptionChange()"></nz-checkbox-group>
+    <h3>2.企业雨水排口、清净废水排口、污水排口下游10公里流经范围内有生态保护红线划定的或具有水生态服务功能的其他水生态环境敏感区和脆弱区，如下所示</h3>
+    <nz-checkbox-group class="customCheckboxGroup" [(ngModel)]="waterCategoryCheckOption.option2" (ngModelChange)="waterCategoryCheckOptionChange()"></nz-checkbox-group>
+    <h3>3.企业位于以下区域 </h3>
+    <nz-checkbox-group class="customCheckboxGroup" [(ngModel)]="waterCategoryCheckOption.option3" (ngModelChange)="waterCategoryCheckOptionChange()"></nz-checkbox-group>
+    <h3>4.其他</h3>
+    <nz-checkbox-group class="customCheckboxGroup" [(ngModel)]="waterCategoryCheckOption.option4" (ngModelChange)="waterCategoryCheckOptionChange()"></nz-checkbox-group>
+  </ng-template>
+  <ng-template #modalWaterFooter>
+    <button nz-button nzType="default" (click)="waterModal=false;">取消</button>
+    <button nz-button nzType="primary" (click)="doSlctWater()">确定</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal  [(nzVisible)]="soilModal" [nzTitle]="modalSoilTitle" [nzContent]="modalSoilContent" [nzFooter]="modalSoilFooter" nzWidth="450" (nzOnCancel)="soilModal=false;">
+  <ng-template #modalSoilTitle>
+    土壤环境要素对应的类别选择项
+  </ng-template>
+  <ng-template #modalSoilContent>
+    <nz-checkbox-group class="customCheckboxGroup" [(ngModel)]="soilCategoryCheckOption" (ngModelChange)="soilCategoryCheckOptionChange()"></nz-checkbox-group>
+  </ng-template>
+  <ng-template #modalSoilFooter>
+    <button nz-button nzType="default" (click)="soilModal=false;">取消</button>
+    <button nz-button nzType="primary" (click)="doSlctSoil()">确定</button>
+  </ng-template>
+</nz-modal>
+
+<table class="customTable">
+  <thead>
+  <tr>
+    <th width="80px">环境要素</th>
+    <th width="120px;">类别</th>
+    <th>环境敏感点名称</th>
+    <th>方位</th>
+    <th>距企业最近距离(m)</th>
+    <th>人数</th>
+    <th>应急联系人</th>
+    <th colspan="2" width="200px">联系电话</th>
+    <th>具体情况说明</th>
+    <th width="17px"></th>
+  </tr>
+  </thead>
+</table>
+<div class="scrollHeight">
+  <table class="customTable">
+    <colgroup>
+      <col width="80px"/>
+      <col width="120px"/>
+      <col/>
+      <col/>
+      <col/>
+      <col/>
+      <col/>
+      <col width="120px"/>
+      <col width="80px"/>
+      <col/>
+    </colgroup>
+    <tbody>
+    <ng-container *ngFor="let item of tableData;index as i">
+      <ng-container *ngIf="item.environmentalFactors=='1'">
+        <tr *ngFor="let childItem of item.receptors;index as j">
+          <td *ngIf="j==0" [attr.rowspan]="item.receptors.length">
+            {{getEnvironmentalFactorsName(item.environmentalFactors)}}
+          </td>
+          <td>{{childItem.category}}</td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.pointName" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="请输入环境敏感点名称">
+          </td>
+          <td>
+            <ng-container *ngIf="childItem.category1=='不涉及以上类别'">
+              <input type="text" nz-input [(ngModel)]="childItem.position" [disabled]="true">
+            </ng-container>
+            <ng-container *ngIf="childItem.category1!='不涉及以上类别'">
+              <nz-select [(ngModel)]="childItem.position" style="width:100%;" nzPlaceHolder="请选择">
+                <nz-option nzValue="N北" nzLabel="N北"></nz-option>
+                <nz-option nzValue="W西" nzLabel="W西"></nz-option>
+                <nz-option nzValue="S南" nzLabel="S南"></nz-option>
+                <nz-option nzValue="E东" nzLabel="E东"></nz-option>
+                <nz-option nzValue="NW西北" nzLabel="NW西北"></nz-option>
+                <nz-option nzValue="NE东北" nzLabel="NE东北"></nz-option>
+                <nz-option nzValue="SW西南" nzLabel="SW西南"></nz-option>
+                <nz-option nzValue="SE东南" nzLabel="SE东南"></nz-option>
+              </nz-select>
+            </ng-container>
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.recentDistance" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="">
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.peopleNumber" [disabled]="childItem.category1=='不涉及以上类别' || childItem.category1=='军事禁地' || childItem.category1=='军事管理区' || childItem.category1=='国家相关保密区域'" placeholder="请输入人数">
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.emergencyContact" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="应急联系人">
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.contactNumber" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="请输入联系电话">
+          </td>
+          <td>
+            <img src="/assets/img/add.png" class="operImg" *ngIf="j==item.receptors.length-1" (click)="slctCategory(i)"/>
+            <img src="/assets/img/addn.png" class="operImg" *ngIf="j<item.receptors.length-1"/>
+            <img src="/assets/img/del.png" class="operImg" (click)="delChildren(i,j)"/>
+          </td>
+          <td *ngIf="j==0" [attr.rowspan]="item.receptors.length">
+            <textarea nz-input [(ngModel)]="item.specificInstructions" rows="5" (focus)="specificInstructionsBlur(i)" placeholder="具体情况说明"></textarea>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="item.environmentalFactors=='2'">
+        <tr *ngFor="let childItem of item.receptors;index as j">
+          <td *ngIf="j==0" [attr.rowspan]="item.receptors.length">
+            {{getEnvironmentalFactorsName(item.environmentalFactors)}}
+          </td>
+          <td>
+            <ng-container *ngIf="childItem.category1=='其他受纳水体'">
+              <input type="text" nz-input [(ngModel)]="childItem.category" placeholder="请输入其他受纳水体类别名称">
+            </ng-container>
+            <ng-container *ngIf="childItem.category1!='其他受纳水体'">
+              {{childItem.category}}
+            </ng-container>
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.pointName" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="请输入环境敏感点名称">
+          </td>
+          <td>
+
+            <ng-container *ngIf="childItem.category1=='不涉及以上类别'">
+              <input type="text" nz-input [(ngModel)]="childItem.position" [disabled]="true">
+            </ng-container>
+            <ng-container *ngIf="childItem.category1!='不涉及以上类别'">
+              <nz-select [(ngModel)]="childItem.position" style="width:100%;" nzPlaceHolder="请选择">
+                <nz-option nzValue="N北" nzLabel="N北"></nz-option>
+                <nz-option nzValue="W西" nzLabel="W西"></nz-option>
+                <nz-option nzValue="S南" nzLabel="S南"></nz-option>
+                <nz-option nzValue="E东" nzLabel="E东"></nz-option>
+                <nz-option nzValue="NW西北" nzLabel="NW西北"></nz-option>
+                <nz-option nzValue="NE东北" nzLabel="NE东北"></nz-option>
+                <nz-option nzValue="SW西南" nzLabel="SW西南"></nz-option>
+                <nz-option nzValue="SE东南" nzLabel="SE东南"></nz-option>
+              </nz-select>
+            </ng-container>
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.recentDistance" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="">
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.peopleNumber" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="请输入人数">
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.emergencyContact" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="应急联系人">
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.contactNumber" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="请输入联系电话">
+          </td>
+          <td>
+            <img src="/assets/img/add.png" class="operImg" *ngIf="j==item.receptors.length-1" (click)="slctCategory(i)"/>
+            <img src="/assets/img/addn.png" class="operImg" *ngIf="j<item.receptors.length-1"/>
+            <img src="/assets/img/del.png" class="operImg" (click)="delChildren(i,j)"/>
+          </td>
+          <td *ngIf="j==0" [attr.rowspan]="item.receptors.length">
+            <textarea nz-input [(ngModel)]="item.specificInstructions" rows="5" placeholder="具体情况说明"></textarea>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="item.environmentalFactors=='3'">
+        <tr *ngFor="let childItem of item.receptors;index as j">
+          <td *ngIf="j==0" [attr.rowspan]="item.receptors.length">
+            {{getEnvironmentalFactorsName(item.environmentalFactors)}}
+          </td>
+          <td>
+            <ng-container *ngIf="childItem.category1=='其他土地类别'">
+              <input type="text" nz-input [(ngModel)]="childItem.category" placeholder="请输入其他土地类别名称">
+            </ng-container>
+            <ng-container *ngIf="childItem.category1!='其他土地类别'">
+              {{childItem.category}}
+            </ng-container>
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.pointName" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="请输入环境敏感点名称">
+          </td>
+          <td>
+            <ng-container *ngIf="childItem.category1=='不涉及以上类别'">
+              <input type="text" nz-input [(ngModel)]="childItem.position" [disabled]="true">
+            </ng-container>
+            <ng-container *ngIf="childItem.category1!='不涉及以上类别'">
+              <nz-select [(ngModel)]="childItem.position" style="width:100%;" nzPlaceHolder="请选择">
+                <nz-option nzValue="N北" nzLabel="N北"></nz-option>
+                <nz-option nzValue="W西" nzLabel="W西"></nz-option>
+                <nz-option nzValue="S南" nzLabel="S南"></nz-option>
+                <nz-option nzValue="E东" nzLabel="E东"></nz-option>
+                <nz-option nzValue="NW西北" nzLabel="NW西北"></nz-option>
+                <nz-option nzValue="NE东北" nzLabel="NE东北"></nz-option>
+                <nz-option nzValue="SW西南" nzLabel="SW西南"></nz-option>
+                <nz-option nzValue="SE东南" nzLabel="SE东南"></nz-option>
+              </nz-select>
+            </ng-container>
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.recentDistance" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="">
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.peopleNumber" [disabled]="childItem.category1=='不涉及以上类别' || childItem.category1=='军事禁地' || childItem.category1=='军事管理区' || childItem.category1=='国家相关保密区域'" placeholder="请输入人数">
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.emergencyContact" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="应急联系人">
+          </td>
+          <td>
+            <input type="text" nz-input [(ngModel)]="childItem.contactNumber" [disabled]="childItem.category1=='不涉及以上类别'" placeholder="请输入联系电话">
+          </td>
+          <td>
+            <img src="/assets/img/add.png" class="operImg" *ngIf="j==item.receptors.length-1" (click)="slctCategory(i)"/>
+            <img src="/assets/img/addn.png" class="operImg" *ngIf="j<item.receptors.length-1"/>
+            <img src="/assets/img/del.png" class="operImg" (click)="delChildren(i,j)"/>
+          </td>
+          <td *ngIf="j==0" [attr.rowspan]="item.receptors.length">
+            <textarea nz-input [(ngModel)]="item.specificInstructions" rows="5" (focus)="specificInstructionsBlur(i)" placeholder="具体情况说明"></textarea>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+<div class="nextStep">
+  <button nz-button nzType="primary" (click)="save()">保存</button>
+  <button nz-button (click)="next()">下一步</button>
+</div>

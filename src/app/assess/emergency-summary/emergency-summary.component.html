@@ -1,0 +1,143 @@
+<nz-modal  [(nzVisible)]="categoryModal" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" nzWidth="800" (nzOnCancel)="categoryModal=false;">
+	<ng-template #modalTitle>
+		所属行业类别及代码
+	</ng-template>
+	<ng-template #modalContent>
+		<form nz-form [nzLayout]="'inline'">
+			<nz-form-item>
+				<nz-form-label>行业编号:</nz-form-label>
+				<nz-form-control>
+					<input nz-input [(ngModel)]="categorySearch.IndustryCode" name="IndustryCode" placeholder="行业编码">
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item>
+				<nz-form-label>行业名称:</nz-form-label>
+				<nz-form-control>
+					<input nz-input [(ngModel)]="categorySearch.IndustryName" name="IndustryName" placeholder="行业名称">
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item>
+				<button nz-button nzType="primary" (click)="categorySch()">查询</button>
+			</nz-form-item>
+			<nz-form-item>
+				<button nz-button nzType="primary" (click)="categorySlct()">确定</button>
+			</nz-form-item>
+		</form>
+		<div style="width:100%;height:10px;"></div>
+		<nz-table #categoryTable
+			nzBordered
+			[nzShowPagination]="false"
+			[nzData]="category.list"
+			class="myTable"
+			>
+			<thead>
+				<tr>
+					<th>选择</th>
+					<th>行业编号</th>
+					<th>行业名称</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let data of categoryTable.data">
+					<td>
+						<input type="radio" name="category" value="{{data.categoryName}}"/>
+					</td>
+					<td>{{data.categoryCode}}</td>
+					<td>{{data.categoryName}}</td>
+				</tr>
+			</tbody>
+		</nz-table>
+		<div style="width:100%;height:10px;"></div>
+		<nz-pagination style="float:right;" [nzPageIndex]="category.curPageIndex" [nzTotal]="category.total" [nzPageSize]="category.pageSize" (nzPageIndexChange)="categoryPageChange($event)"></nz-pagination>
+		<div class="clear"></div>
+	</ng-template>
+
+	<ng-template #modalFooter>
+	<!-- <button nz-button nzType="default" (click)="handleCancel()">Custom Callback</button>
+	<button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Custom Submit</button> -->
+	</ng-template>
+</nz-modal>
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th width="150px">行业类别</th>
+			<th width="150px">时间</th>
+			<th>地点</th>
+			<th>装置规模</th>
+			<th>引发原因</th>
+			<th>物料泄露量</th>
+			<th>采取的应急措施</th>
+			<th>事件影响(影响范围、事件损失)</th>
+			<th width="80px">操作</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col width="150px"/>
+				<col width="150px"/>
+				<col/>
+				<col/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+	  		<col width="80px"/>
+	  	</colgroup>
+	    <tbody>
+	  		<tr *ngFor="let item of tableData;index as i">
+					<td>{{i+1}}</td>
+					<td>
+						<nz-input-group nzSearch  nzSize="default" [nzAddOnAfter]="slctCategoryBtn">
+							<input nz-input [(ngModel)]="item.IndustryCategories" [disabled]="true" placeholder="请选择所属行业类别">
+						</nz-input-group>
+						<ng-template #slctCategoryBtn>
+							<span (click)="showCategory(i)" style="cursor: pointer;">选择</span>
+						</ng-template>
+					</td>
+					<td>
+						<nz-date-picker [(ngModel)]="item.HappenTime" *ngIf="item.CanEdit==1 || item.CanEdit=='1'; else HappenTimeElseBlock" style="width:100%;" placeholder="请选择时间"></nz-date-picker>
+						<ng-template #HappenTimeElseBlock>{{item.HappenTime}}</ng-template>
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.HappenPlace" *ngIf="item.CanEdit==1 || item.CanEdit=='1'; else HappenPlaceElseBlock" placeholder="请填写地点">
+						<ng-template #HappenPlaceElseBlock>{{item.HappenPlace}}</ng-template>
+
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.DeviceScale" *ngIf="item.CanEdit==1 || item.CanEdit=='1'; else DeviceScaleElseBlock" placeholder="请填写装置规模">
+						<ng-template #DeviceScaleElseBlock>{{item.DeviceScale}}</ng-template>
+					</td>
+					<td>
+						<textarea nz-input rows="5" [(ngModel)]="item.Causes" *ngIf="item.CanEdit==1 || item.CanEdit=='1'; else CausesElseBlock" placeholder="请填写引发原因"></textarea>
+						<ng-template #CausesElseBlock>{{item.Causes}}</ng-template>
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.MaterialLeakage" *ngIf="item.CanEdit==1 || item.CanEdit=='1'; else MaterialLeakageElseBlock" placeholder="请填写物料泄漏量">
+						<ng-template #MaterialLeakageElseBlock>{{item.MaterialLeakage}}</ng-template>
+					</td>
+					<td>
+						<textarea nz-input rows="5" [(ngModel)]="item.EmergencyMeasuresTaken" *ngIf="item.CanEdit==1 || item.CanEdit=='1'; else EmergencyMeasuresTakenElseBlock" placeholder="请填写采取的应急措施"></textarea>
+						<ng-template #EmergencyMeasuresTakenElseBlock>{{item.EmergencyMeasuresTaken}}</ng-template>
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.EventImpact" *ngIf="item.CanEdit==1 || item.CanEdit=='1'; else EventImpactElseBlock" placeholder="请填写事件影响">
+						<ng-template #EventImpactElseBlock>{{item.EventImpact}}</ng-template>
+					</td>
+					<td>
+						<img src="/assets/img/add.png" class="operImg" (click)="addParent()" *ngIf="i==tableData.length-1"/>
+						<img src="/assets/img/addn.png" class="operImg" *ngIf="i<tableData.length-1"/>
+						<img src="/assets/img/del.png" class="operImg" (click)="delParent(i)"/>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

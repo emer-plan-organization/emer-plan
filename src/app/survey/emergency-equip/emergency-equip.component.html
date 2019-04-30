@@ -1,0 +1,112 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px" rowspan="2">序号</th>
+			<th rowspan="2">类别</th>
+			<th rowspan="2">类型</th>
+			<th rowspan="2">名称</th>
+			<th rowspan="2">型号</th>
+			<th rowspan="2">数量</th>
+			<th rowspan="2">用途</th>
+			<th rowspan="2">存储区域</th>
+			<th rowspan="2">报废日期</th>
+			<th colspan="2">负责人</th>
+			<th rowspan="2">备注</th>
+			<th rowspan="2" width="80px">操作</th>
+			<th rowspan="2" width="17px"></th>
+		</tr>
+		<tr>
+				<th>姓名</th>
+				<th>联系电话</th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+	  		<col width="80px"/>
+	  	</colgroup>
+			<tbody>
+				<ng-container *ngFor="let item of tableData;index as i">
+					<tr *ngFor="let equipItem of item.childList;index as j">
+						<td>{{j+1}}</td>
+						<td *ngIf="j==0" [attr.rowspan]="item.childList.length">
+							<ng-container *ngIf="item.category=='1'">
+								应急处置物资
+							</ng-container>
+							<ng-container *ngIf="item.category=='2'">
+								应急处置装备
+							</ng-container>
+						</td>
+						<td>
+							<nz-select [(ngModel)]="equipItem.emergencyType"  style="width:100%;" nzPlaceHolder="请选择">
+								<nz-option nzValue="1" nzLabel="个人防护物资"></nz-option>
+								<nz-option nzValue="2" nzLabel="围堵物资"></nz-option>
+								<nz-option nzValue="3" nzLabel="处理处置物资"></nz-option>
+								<nz-option nzValue="4" nzLabel="其他物资"></nz-option>
+							</nz-select>
+						</td>
+						<td>
+							<input nz-input [(ngModel)]="equipItem.suppliesName" placeholder="请输入名称">
+						</td>
+						<td>
+							<input nz-input [(ngModel)]="equipItem.suppliesModel" placeholder="请输入型号">
+						</td>
+						<td>
+							<input nz-input [(ngModel)]="equipItem.suppliesNumber" placeholder="请输入数量">
+						</td>
+						<td>
+							<input nz-input [(ngModel)]="equipItem.suppliesUse" placeholder="请输入用途">
+						</td>
+						<td>
+							<input nz-input  [(ngModel)]="equipItem.storageArea" placeholder="请输入存储区域">
+						</td>
+						<td>
+							<nz-date-picker style="width:100%;" [(ngModel)]="equipItem.scrappedDate" placeholder="请选择时间"></nz-date-picker>
+						</td>
+						<td>
+							<input
+								placeholder="请输入负责人"
+								nz-input
+								[(ngModel)]="equipItem.contactName"
+								(input)="onContactNameInput($event.target?.value)"
+								[nzAutocomplete]="auto"
+							/>
+							<nz-autocomplete nzBackfill #auto>
+								<nz-auto-option *ngFor="let person of personList1" (selectionChange)="onContactNameChange(equipItem,person)" [nzValue]="person.personName">
+								  {{ person.personName }}
+								</nz-auto-option>
+							</nz-autocomplete>
+						</td>
+						<td>
+							<input nz-input [(ngModel)]="equipItem.contactNumber" placeholder="请输入电话">
+						</td>
+						<td>
+							<input nz-input [(ngModel)]="equipItem.remark" placeholder="请输入备注">
+						</td>
+						<td>
+							<img src="/assets/img/add.png" class="operImg" *ngIf="j==item.childList.length-1" (click)="addChildren(i)"/>
+							<img src="/assets/img/addn.png" class="operImg" *ngIf="j<item.childList.length-1"/>
+							<img src="/assets/img/del.png" class="operImg" (click)="delChildren(i,j)"/>
+						</td>
+					</tr>
+				</ng-container>
+			</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

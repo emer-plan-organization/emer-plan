@@ -1,0 +1,124 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th>单位</th>
+			<th>单位名称</th>
+			<th colspan='4'>联系电话</th>
+			<th width="80px">操作</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col width="80px"/>
+		</colgroup>
+		<tbody>
+			<tr>
+				<td colspan='2'>国家化学事故应急响应专线</td>
+				<td colspan='4'>0532-83889090</td>
+				<td>
+					<img src="/assets/img/addn.png" class="operImg"/>
+					<img src="/assets/img/deln.png" class="operImg"/>
+				</td>
+			</tr>
+      <tr *ngFor="let item of tableData1;index as i">
+        <td colspan="2">
+          <nz-input-group [nzAddOnBefore]="item.branchName+'：'">
+            <input nz-input [(ngModel)]="item.agencyName" [ngClass]="{'customValidErr':(!isPassValid && !item.agencyName)}" placeholder="">
+          </nz-input-group>
+        </td>
+        <td colspan='4'>
+          <input nz-input [(ngModel)]="item.contactNumber" [ngClass]="{'customValidErr':(!isPassValid && !item.contactNumber)}" placeholder="请填写联系电话">
+        </td>
+        <td>
+          <img src="/assets/img/add.png" class="operImg" (click)="addOneTableData()" *ngIf="i==tableData1.length-1"/>
+          <img src="/assets/img/addn.png" class="operImg" *ngIf="i<tableData1.length-1"/>
+          <img src="/assets/img/deln.png" class="operImg"/>
+        </td>
+      </tr>
+      <tr *ngFor="let item of tableData4;index as i">
+        <td colspan="2">
+          <nz-input-group [nzAddOnBefore]="item.branchName+'：'">
+            <input nz-input [(ngModel)]="item.agencyName" [ngClass]="{'customValidErr':(!isPassValid && !item.agencyName)}" placeholder="">
+          </nz-input-group>
+        </td>
+        <td>
+          <input nz-input [(ngModel)]="item.contactNumber" [ngClass]="{'customValidErr':(!isPassValid && !item.contactNumber)}" placeholder="请填写联系电话">
+        </td>
+        <td colspan="2">
+          <nz-input-group nzAddOnBefore="地址：">
+            <input nz-input [(ngModel)]="item.address" [ngClass]="{'customValidErr':(!isPassValid && !item.address)}" placeholder="请填写地址">
+          </nz-input-group>
+        </td>
+        <td>
+          <nz-input-group nzAddOnBefore="测距：">
+            <input nz-input [(ngModel)]="item.distance" [ngClass]="{'customValidErr':(!isPassValid && !item.distance)}" placeholder="请测距">
+          </nz-input-group>
+        </td>
+      </tr>
+      <tr *ngFor="let item of tableData2;index as i">
+        <td colspan="2" *ngIf="item.type!='un'">
+          <nz-input-group [nzAddOnBefore]="item.branchName+'：'">
+            <input nz-input [(ngModel)]="item.agencyName" [ngClass]="{'customValidErr':(!isPassValid && !item.agencyName)}" placeholder="">
+          </nz-input-group>
+        </td>
+        <td colspan="2" *ngIf="item.type=='un'">
+          <nz-select [(ngModel)]="item.branchName" (ngModelChange)="branchNameChange(i,$event)" [ngClass]="{'customValidErr':(!isPassValid && !item.branchName)}" style="width:100%;" nzPlaceHolder="请选择">
+            <nz-option nzValue="电信部门" nzLabel="电信部门"></nz-option>
+            <nz-option nzValue="街道办事处" nzLabel="街道办事处"></nz-option>
+            <nz-option nzValue="镇政府" nzLabel="镇政府"></nz-option>
+            <nz-option nzValue="安监部门" nzLabel="安监部门"></nz-option>
+            <nz-option nzValue="水务部门" nzLabel="水务部门"></nz-option>
+            <nz-option nzValue="卫生部门" nzLabel="卫生部门"></nz-option>
+          </nz-select>
+        </td>
+        <td colspan='4'>
+          <input nz-input [(ngModel)]="item.contactNumber" [ngClass]="{'customValidErr':(!isPassValid && !item.contactNumber)}" placeholder="请填写联系电话">
+        </td>
+        <td>
+          <img src="/assets/img/add.png" class="operImg" (click)="addOneTableData()" *ngIf="i==tableData1.length-1"/>
+          <img src="/assets/img/addn.png" class="operImg" *ngIf="i<tableData1.length-1"/>
+          <img src="/assets/img/del.png" class="operImg" (click)="delOneTableData(i)"/>
+        </td>
+      </tr>
+
+			<tr *ngFor="let item of tableData3;index as i">
+				<td colspan='2'>{{item.branchName}}</td>
+				<td style="width:60px;">
+					<nz-select [(ngModel)]="item.isHave" (ngModelChange)="isHaveChange(i,$event)" [ngClass]="{'customValidErr':(!isPassValid && !item.isHave)}" nzPlaceHolder="请选择" style="width:100%;">
+						<nz-option nzValue="1" nzLabel="有"></nz-option>
+						<nz-option nzValue="0" nzLabel="无"></nz-option>
+					</nz-select>
+				</td>
+				<td colspan="2"  [ngClass]="{'customGroupDisabled':(item.isHave===0 || item.isHave==='0')}">
+					<nz-input-group nzAddOnBefore="单位名称：">
+						<!--<ng-container *ngIf="item.isHave===0 || item.isHave==='0'; else  isHaveElseBlock" >
+							<input nz-input [(ngModel)]="item.agencyName" placeholder="" disabled="disabled" *ngIf="item.isHave===0 || item.isHave==='0'; else  isHaveElseBlock">
+						</ng-container>
+						<ng-container #isHaveElseBlock>
+							<input nz-input [(ngModel)]="item.agencyName" [ngClass]="{'customValidErr':(!isPassValid && !item.agencyName)}" placeholder="">
+						</ng-container>-->
+            <input nz-input [(ngModel)]="item.agencyName" placeholder="" disabled="disabled" *ngIf="item.isHave===0 || item.isHave==='0'; else  isHaveElseBlock">
+            <ng-template #isHaveElseBlock>	<input nz-input [(ngModel)]="item.agencyName" [ngClass]="{'customValidErr':(!isPassValid && !item.agencyName)}" placeholder=""></ng-template>
+					</nz-input-group>
+				</td>
+				<td>
+					上传协议
+				</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

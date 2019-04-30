@@ -1,0 +1,55 @@
+<form nz-form [formGroup]="validateForm">
+  <table class="customTable">
+    <tbody>
+    <tr>
+      <td style="width:240px;">环境功能区划情况</td>
+      <td>
+        <nz-form-control>
+          <textarea nz-input formControlName="FunctionDivision" [(ngModel)]="data.FunctionDivision" rows="5"
+                    placeholder="具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>最近一年地表水环境质量现状</td>
+      <td>
+        <nz-form-control>
+          <textarea nz-input formControlName="SurfaceWaterQuality" [(ngModel)]="data.SurfaceWaterQuality" rows="5"
+                    placeholder="具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>最近一年地下水环境质量现状</td>
+      <td>
+        <nz-form-control>
+          <textarea nz-input formControlName="GroundwaterQuality" [(ngModel)]="data.GroundwaterQuality" rows="5"
+                    placeholder="具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>最近一年大气环境质量现状</td>
+      <td>
+        <nz-form-control>
+          <textarea nz-input formControlName="AtmosphereQuality" [(ngModel)]="data.AtmosphereQuality" rows="5"
+                    placeholder="具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>最近一年土壤环境质量现状</td>
+      <td>
+        <nz-form-control>
+          <textarea nz-input formControlName="SoilQuality" [(ngModel)]="data.SoilQuality" rows="5"
+                    placeholder="具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+<div class="nextStep">
+  <button nz-button nzType="primary" (click)="save()">保存</button>
+  <button nz-button (click)="next()">下一步</button>
+</div>

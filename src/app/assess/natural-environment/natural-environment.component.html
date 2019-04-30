@@ -1,0 +1,177 @@
+<form nz-form [formGroup]="validateForm">
+  <table class="customTable">
+    <tbody>
+    <tr>
+      <td style="width:240px;">地形地貌</td>
+      <td colspan='5'>
+        <!-- <input nz-input placeholder="请输入单位名称"> -->
+        <nz-form-control>
+          <textarea nz-input formControlName="TopographicFeatures" [(ngModel)]="data.TopographicFeatures" rows="10" placeholder="如在泄洪区、河边、坡地等情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="14">
+        气候类型
+      </td>
+      <td rowspan="3">气温</td>
+      <td colspan="2">
+        <!-- <nz-input-group nzAddOnBefore="年平均气温" nzAddOnAfter="(℃)">
+          <input type="text" nz-input />
+        </nz-input-group> -->
+        年平均气温(℃)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="MeanTemperature" [(ngModel)]="data.MeanTemperature"placeholder="请输入年平均气温(℃)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        年最高气温(℃)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="MaximumTemperature" [(ngModel)]="data.MaximumTemperature" placeholder="请输入日最高气温(℃)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        年最低气温(℃)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="MinimumTemperature" [(ngModel)]="data.MinimumTemperature" placeholder="请输入日最低气温(℃)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="2">
+        风速
+      </td>
+      <td colspan="2">
+        年平均风速(m/s)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="MeanWindSpeed" [(ngModel)]="data.MeanWindSpeed" placeholder="请输入年平均风速(m/s)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        最大风速(m/s)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="MaximumWindSpeed" [(ngModel)]="data.MaximumWindSpeed" placeholder="请输入最大风速(m/s)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>气压</td>
+      <td colspan="2">
+        年平均气压(kPa)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="AverageAtmosphericPressure" [(ngModel)]="data.AverageAtmosphericPressure" placeholder="请输入年平均气压(kPa)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="3">降雨量</td>
+      <td colspan="2">
+        年平均降雨量(mm)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="AveragePrecipitation" [(ngModel)]="data.AveragePrecipitation" placeholder="请输入年平均降雨量(mm)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        最长历时降雨量(mm)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="LongestDurationPrecipitation" [(ngModel)]="data.LongestDurationPrecipitation" placeholder="请输入最长历时降雨量(mm)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        小时最大降雨量(mm)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="MaximumPrecipitation" [(ngModel)]="data.MaximumPrecipitation" placeholder="请输入小时最大降雨量(mm)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>雷暴日数</td>
+      <td colspan="2">
+        年平均雷暴日数(天)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="AverageThunderstormDays" [(ngModel)]="data.AverageThunderstormDays" placeholder="请输入年平均雷暴日数(天)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="3">风向</td>
+      <td colspan="2">
+        全年主导风向
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="PrevailingWindDirection" [(ngModel)]="data.PrevailingWindDirection" placeholder="请输入全年主导风向">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        冬季主导风向
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" nz-input formControlName="WinterDominantWindDirection" [(ngModel)]="data.WinterDominantWindDirection" placeholder="请输入冬季主导风向">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        夏季主导风向
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input type="text" formControlName="SummerPrevailingWindDirection" [(ngModel)]="data.SummerPrevailingWindDirection" nz-input placeholder="请输入夏季主导风向">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>年风向玫瑰图</td>
+      <td colspan="4">
+        <button nz-button nzType="default">预览(0)</button>
+      </td>
+    </tr>
+    <tr>
+      <td>历史上曾经发生过的极端天气情况和自然灾害情况</td>
+      <td colspan="5">
+        <nz-form-control>
+        <textarea nz-input rows="5" formControlName="NaturalDisaster" [(ngModel)]="data.NaturalDisaster" placeholder="如地震、台风、泥石流、洪水等具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+<div class="nextStep">
+  <button nz-button nzType="primary" (click)="save()">保存</button>
+  <button nz-button (click)="next()">下一步</button>
+</div>

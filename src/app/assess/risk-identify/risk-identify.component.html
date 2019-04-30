@@ -1,0 +1,113 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">类别</th>
+			<th>名称</th>
+			<th>主要化学成分</th>
+			<th>目前数量(吨)</th>
+			<th>生产装置/设施/场所</th>
+			<th>风险物质辨识</th>
+			<th>风险物质类别</th>
+			<th width="80px">操作</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+				<col/>
+	  		<col width="80px"/>
+	  	</colgroup>
+	    <tbody>
+			<ng-container *ngFor="let item of tableData.list;index as i">
+				<tr *ngFor="let childItem of item.childList;index as j">
+					<td *ngIf="j==0" [attr.rowspan]="item.childList.length">{{item.category}}</td>
+					<td>
+						<input type="text" nz-input [(ngModel)]="childItem.substanceName" placeholder="请输入名称">
+					</td>
+					<td>
+						<input nz-input 
+						[(ngModel)]="childItem.mainIngredient" 
+						(input)="onMainIngredientInput($event.target?.value,childItem)"
+						[nzAutocomplete]="autoMainIngredient"
+						placeholder="请选择或输入主要化学成分">
+						<nz-autocomplete nzBackfill #autoMainIngredient>
+							<nz-auto-option *ngFor="let risk of riskList1" (selectionChange)="onMainIngredientChange(childItem,risk)" [nzValue]="risk.evaluationBasis">
+							  {{ risk.evaluationBasis }}
+							</nz-auto-option>
+						</nz-autocomplete>
+						
+						<!-- <nz-select nzMode="tags" [(ngModel)]="childItem.mainIngredient" style="width: 100%;" nzPlaceHolder="请输入或选择">
+						  <nz-option *ngFor="let risk of riskList" [nzLabel]="risk.casNumber" [nzValue]="risk.casNumber"  (nzClickOption)="riskOptionChange(j,$event)"> </nz-option>
+						</nz-select> -->
+					</td>
+					<td>
+						<input type="text" nz-input [(ngModel)]="childItem.currentNumber" placeholder="请输入目前数量">
+					</td>
+					<td>
+					<input type="text" nz-input [(ngModel)]="childItem.storagePlace" (blur)="onStoragePlaceBlur()" placeholder="请输入生产装置/设施/场所">
+					</td>
+					<td>
+						<ng-container *ngIf="childItem.identification=='0'">
+							否
+						</ng-container>
+						<ng-container *ngIf="childItem.identification=='1'">
+							是
+						</ng-container>
+					</td>
+					<td>
+						<ng-container *ngIf="childItem.identification==null || childItem.identification=='' || childItem.identification=='0';else elseIdentification">
+							{{childItem.substanceCategory}}
+						</ng-container>
+						<ng-template #elseIdentification>
+							<nz-select [(ngModel)]="childItem.substanceCategory" (ngModelChange)="onSubstanceCategoryChange()" style="width: 100%;" nzPlaceHolder="请选择">
+							  <nz-option nzValue="1" nzLabel="涉气"> </nz-option>
+							  <nz-option nzValue="2" nzLabel="涉水"> </nz-option>
+							  <nz-option nzValue="3" nzLabel="同时涉气和涉水"> </nz-option>
+							</nz-select>
+						</ng-template>
+					</td>
+					<td>
+						<img src="/assets/img/add.png" class="operImg" *ngIf="j==item.childList.length-1" (click)="addChildren(i)"/>
+						<img src="/assets/img/addn.png" class="operImg" *ngIf="j<item.childList.length-1"/>
+						<img src="/assets/img/del.png" class="operImg" *ngIf="j>0" (click)="delChildren(i,j)"/>
+						<img src="/assets/img/deln.png" class="operImg" *ngIf="j==0"/>
+					</td>
+				</tr>
+				
+			</ng-container>
+				<tr>
+					<td colspan="4">环境风险单元</td>
+					<td colspan="4">{{tableData.environmentalRiskUnit}}</td>
+				</tr>
+				<tr>
+					<td colspan="4">突发环境风险类别企业</td>
+					<td colspan="4">
+						<ng-container *ngIf="tableData.type=='1'">
+							涉气突发环境事件风险企业
+						</ng-container>
+						<ng-container *ngIf="tableData.type=='2'">
+							涉水突发环境事件风险企业
+						</ng-container>
+						<ng-container *ngIf="tableData.type=='3'">
+							同时涉及突发大气和水环境事件风险的企业
+						</ng-container>
+						<ng-container *ngIf="tableData.type!='1' && tableData.type!='2' && tableData.type!='3'">
+							{{tableData.type}}
+						</ng-container>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

@@ -1,0 +1,89 @@
+<nz-modal  [(nzVisible)]="levelModal" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" nzWidth="800" (nzOnCancel)="levelModal=false;">
+	<ng-template #modalTitle>
+		突发环境事件级别
+	</ng-template>
+	<ng-template #modalContent>
+		<table class="customTable">
+			<thead>
+				<tr>
+					<th width="80px">选择</th>
+					<th width="160px">突发环境事件级别</th>
+					<th>具体情形</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of levelList;index as i" (click)="chooseLevel(item)" style="cursor: pointer;">
+					<td>
+						<label nz-radio [(ngModel)]="item.isCheck"></label>
+					</td>
+					<td>{{item.name}}</td>
+					<td [innerHTML]="item.detail | safeHtml"></td>
+				</tr>
+			</tbody>
+		</table>
+	</ng-template>
+	<ng-template #modalFooter>
+	</ng-template>
+</nz-modal>
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th>事件情景</th>
+			<th>需要疏散的人口数量(人)</th>
+			<th>是否影响到饮用水水源地取水</th>
+			<th>是否造成跨界影响</th>
+			<th>是否影响生态敏感区生态功能</th>
+			<th>预估可能的突发环境事件级别</th>
+			<th>备注</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+	  		<col/>
+				<col/>
+	  	</colgroup>
+	    <tbody>
+				<tr *ngFor="let item of tableData;index as i">
+					<td>{{i+1}}</td>
+					<td>{{item.scenarioAnalysis}}</td>
+					<td>
+						<input nz-input [(ngModel)]="item.evacuateInhabitants" placeholder="请输入需要疏散的人口数量">
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.influenceWater" placeholder="请输入是否影响到饮用水水源地取水">
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.transboundary" placeholder="请输入是否造成跨界影响">
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="item.ecologicalFunction" placeholder="请输入是否影响生态敏感区生态功能">
+					</td>
+					<td>
+						<nz-input-group nzSearch nzSize="default" [nzAddOnAfter]="slctBtn">
+							<input nz-input [value]="getLevelName(item.level)" [disabled]="true" placeholder="请选择">
+						</nz-input-group>
+						<ng-template #slctBtn>
+							<span (click)="slctLevel(i)" style="cursor: pointer;">选择</span>
+						</ng-template>
+					</td>
+					<td>
+						<textarea nz-input [(ngModel)]="item.remark" rows="5" placeholder="具体情况说明"></textarea>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

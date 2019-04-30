@@ -1,0 +1,182 @@
+/* You can add global styles to this file, and also import other style files */
+.clear{
+	clear:both;
+}
+
+table.customTable{
+	width:100%;
+	table-layout: fixed;
+}
+
+table.customTable tr th, tr th,table.customTable tr td { 
+	border:1px solid #e8e8e8; 
+	padding:10px 5px;
+}
+table.customTable tr th{
+	text-align: center;
+	background-color: #F8F8F9;
+}
+table.customTable tr td{
+	text-align: center;
+}
+
+table.customTable tr td .operImg{
+	margin-right:10px;
+}
+
+table.customTable tr td .operImg:nth-last-child(1){
+	margin-right:0px;
+}
+
+.myTable .ant-table-thead > tr > th, .myTable .ant-table-tbody > tr > td{
+	padding:10px 16px;
+}
+.myTable .ant-table-thead > tr > th{
+	text-align: center;
+}
+
+
+ /*table,table tr th, table tr td { border:1px solid #0094ff; }
+table { width: 200px; min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse;} */  
+
+.nextStep{
+	text-align: center;
+}
+
+.nextStep button{
+	margin:10px 5px;
+}
+
+
+@media screen and (max-width: 1440px) { 
+	.scrollHeight{
+		max-height: 420px; 
+	}	
+} 
+@media screen and (min-width: 1440px) { 
+	.scrollHeight{
+		max-height: 461px; 
+	}	
+} 
+@media screen and (min-width: 1920px) { 
+	.scrollHeight{
+		max-height: 612px; 
+	}
+} 
+.scrollHeight{
+	overflow-y: scroll;
+}
+
+.scrollHeight table tr td{
+	border-top:none;
+}
+
+.has-error .ant-checkbox-inner{
+	border: solid 1px #f5222d !important;
+}
+
+.logo{
+	height:100%;
+	width:180px;
+}
+
+.logo img{
+	height:100%;
+}
+
+.icon-unComplete {
+    width: 8px;
+    height: 8px;
+    border-radius: 100px;
+    background: #gray;
+}
+
+.icon-complete {
+    width: 8px;
+    height: 8px;
+    border-radius: 100px;
+    background: #0af;
+}
+
+.customMenu.ant-menu{
+	background-color:#2d4875;
+	color:hsla(0,0%,100%,.7);
+	font-size:14px;
+	height:100%;
+	overflow-x: hidden;
+	overflow-y:auto ;
+}
+.customMenu.ant-menu .ant-menu-submenu > .ant-menu{
+	background-color:#273E65;
+}
+
+.customMenu.ant-menu .ant-menu-submenu-title:hover{
+	color:#ffffff;
+}
+.customMenu.ant-menu .ant-menu-item > a{
+	color:hsla(0,0%,100%,.7);
+}
+
+.customMenu.ant-menu .ant-menu-item > a:hover{
+	color:#ffffff;
+}
+
+.customMenu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
+	background-color:#2d8cf0;
+}
+
+.customMenu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a{
+	color:#ffffff;
+}
+
+.customMenu .ant-menu-inline .ant-menu-item{
+	height: 57px;
+	line-height:57px;
+}
+.titleBtn{
+	float:right;
+}
+
+.titleBtn button{
+	margin:5px;
+}
+
+.customValidErr{
+	border:solid 1px #f5222d;
+}
+
+.falseDisable{
+	color:rgb(167, 167, 129);
+}
+.customGroupDisabled .ant-input-group-addon{
+	color:rgba(0, 0, 0, 0.25);
+	cursor: not-allowed;
+}
+
+.customGroupDisabled input{
+	color: rgba(0,0,0,.25);
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.customGroupDisabled input:hover {
+    border-color: #e6d8d8;
+    border-right-width: 1px!important;
+}
+
+.has-error .ant-radio-group, .has-error .ant-radio-group:hover{
+  border: 1px solid #f5222d;
+}
+
+.customCheckboxGroup .ant-checkbox-wrapper{
+  min-width:50%;
+  margin:5px 0px;
+}
+.customCheckboxGroup .ant-checkbox-wrapper + .ant-checkbox-wrapper{
+  margin-left:0px;
+}
+
+.fieldKeyValueShow div::first-child{
+	font-weight: bold;
+}

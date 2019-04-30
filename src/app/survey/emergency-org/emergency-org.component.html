@@ -1,0 +1,87 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th>应急机构</th>
+			<th>职务</th>
+			<th>公司岗位</th>
+			<th width="150px">人员(姓名)</th>
+			<th width="200px" colspan="2">手机号</th>
+			<th>24小时应急值守电话</th>
+			<th width="80px">操作</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+	  		<col width="150px"/>
+	  		<col width="120px"/>
+	  		<col width="80"/>
+	  		<col/>
+	  		<col width="80px"/>
+	  	</colgroup>
+	    <tbody>
+	  		<ng-container *ngFor="let item of tableData;index as i">
+	  			<tr *ngFor="let personItem of item.personList;index as j">
+					<td *ngIf="j==0" [attr.rowspan]="item.personList.length">
+						{{i+1}}
+					</td>
+					<td *ngIf="j==0" [attr.rowspan]="item.personList.length">
+						<span *ngIf="item.canDel==0">{{item.organizationName}}</span>
+						<input nz-input *ngIf="item.canDel!=0" [(ngModel)]="item.organizationName" [ngClass]="{'customValidErr':(!isPassValid && !item.organizationName)}" placeholder="请输入应急机构">
+						<!-- <input nz-input [(ngModel)]="item.organizationName" [ngClass]="{'customValidErr':(!isPassValid && !item.organizationName)}" placeholder="请输入应急机构"> -->
+						
+					</td>
+					<td>
+						<span *ngIf="personItem.canDel==0">{{personItem.position}}</span>
+						<input nz-input *ngIf="personItem.canDel!=0" [(ngModel)]="personItem.position" [ngClass]="{'customValidErr':(!isPassValid && !personItem.position)}" placeholder="请输入职务">
+						<!-- <input nz-input [(ngModel)]="personItem.position" [ngClass]="{'customValidErr':(!isPassValid && !personItem.position)}" placeholder="请输入职务"> -->
+					</td>
+					<td>
+						<!-- <span *ngIf="personItem.canDel==0">{{personItem.companyPost}}</span>
+						<input nz-input *ngIf="personItem.canDel!=0" [(ngModel)]="personItem.companyPost" [ngClass]="{'customValidErr':(!isPassValid && !personItem.companyPost)}" placeholder="请输入公司岗位"> -->
+						<input nz-input [(ngModel)]="personItem.companyPost" [ngClass]="{'customValidErr':(!isPassValid && !personItem.companyPost)}" placeholder="请输入公司岗位">
+					</td>
+					<td>
+						<!-- <span *ngIf="personItem.canDel==0">{{personItem.personName}}</span>
+						<input nz-input *ngIf="personItem.canDel!=0" [(ngModel)]="personItem.personName" [ngClass]="{'customValidErr':(!isPassValid && !personItem.personName)}" placeholder="请输入人员姓名"> -->
+						<input nz-input [(ngModel)]="personItem.personName" [ngClass]="{'customValidErr':(!isPassValid && !personItem.personName)}" placeholder="请输入人员姓名">
+					</td>
+					<td>
+						<!-- <span *ngIf="personItem.canDel==0">{{personItem.phoneNumber}}</span>
+						<input nz-input *ngIf="personItem.canDel!=0" [(ngModel)]="personItem.phoneNumber" [ngClass]="{'customValidErr':(!isPassValid && !personItem.phoneNumber)}" placeholder="请输入手机号"> -->
+						<input nz-input [(ngModel)]="personItem.phoneNumber" [ngClass]="{'customValidErr':(!isPassValid && !personItem.phoneNumber)}" placeholder="请输入手机号">
+					</td>
+					<td>
+						<img src="/assets/img/add.png" class="operImg" *ngIf="j==item.personList.length-1" (click)="addChildren(i)"/>
+						<img src="/assets/img/addn.png" class="operImg" *ngIf="j<item.personList.length-1"/>
+						<img src="/assets/img/del.png" class="operImg"  *ngIf="personItem.canDel!=0" (click)="delChildren(i,j)"/>
+						<img src="/assets/img/deln.png" class="operImg" *ngIf="personItem.canDel==0"/>
+					</td>
+					<td *ngIf="j==0" [attr.rowspan]="item.personList.length">
+						<!-- <span *ngIf="item.canDel==0">{{personItem.position}}</span>
+						<input nz-input *ngIf="item.canDel!=0" [(ngModel)]="item.serviceNumber" [ngClass]="{'customValidErr':(!isPassValid && !item.serviceNumber)}" placeholder="请输入应急值守电话"> -->
+						<input nz-input [(ngModel)]="item.serviceNumber" [ngClass]="{'customValidErr':(!isPassValid && !item.serviceNumber)}" placeholder="请输入应急值守电话">
+					</td>
+					<td *ngIf="j==0" [attr.rowspan]="item.personList.length">
+						<img src="/assets/img/add.png" class="operImg" *ngIf="i==tableData.length-1" (click)="addParent()"/>
+						<img src="/assets/img/addn.png" class="operImg" *ngIf="i<tableData.length-1"/>
+						<img src="/assets/img/del.png" class="operImg" *ngIf="item.canDel!=0" (click)="delParent(i)"/>
+						<img src="/assets/img/deln.png" class="operImg" *ngIf="item.canDel==0"/>
+					</td>
+		  		</tr>
+	  		</ng-container>
+		  		
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

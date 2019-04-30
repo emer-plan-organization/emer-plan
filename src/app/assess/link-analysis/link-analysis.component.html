@@ -1,0 +1,147 @@
+<form nz-form [formGroup]="validateForm">
+  <table class="customTable">
+    <head>
+      <tr>
+        <th colspan="2" style="width:300px;">污染物种类</th>
+        <th colspan="4">污染环节分析</th>
+      </tr>
+    </head>
+    <tbody>
+    <tr>
+      <td colspan="2">废气</td>
+      <td colspan='4'>
+        <nz-form-control>
+        <textarea nz-input formControlName="wasteGas" [(ngModel)]="data.wasteGas" rows="5" placeholder="废气产污环节具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">废水</td>
+      <td colspan='4'>
+        <nz-form-control>
+        <textarea nz-input formControlName="wasteWater" [(ngModel)]="data.wasteWater" rows="5" placeholder="废水产污环节具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">噪音</td>
+      <td colspan='4'>
+        <nz-form-control>
+        <textarea nz-input formControlName="noise" [(ngModel)]="data.noise" rows="5" placeholder="噪音产污环节具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="10">
+        固体废物
+      </td>
+      <td>一般固体废物</td>
+      <td colspan="4">
+        <nz-form-control>
+        <textarea nz-input formControlName="generalSolidWaste" [(ngModel)]="data.generalSolidWaste" rows="5" placeholder="一般固体产污环节具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="9">危险废物</td>
+      <td colspan="4">
+        <nz-form-control>
+        <textarea nz-input formControlName="hazardousWaste" [(ngModel)]="data.hazardousWaste" rows="5" placeholder="危废产污环节具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        产生量(t/d)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input nz-input formControlName="discharge" [(ngModel)]="data.discharge" placeholder="请输入产生量(t/d)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        运输量(t/d)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input nz-input formControlName="ttraffic" [(ngModel)]="data.ttraffic" placeholder="请输入运输量(t/d)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        处置量(t/d)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input nz-input formControlName="disposal" [(ngModel)]="data.disposal" placeholder="请输入处置量(t/d)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        存放量(t/d)
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input nz-input formControlName="deposit" [(ngModel)]="data.deposit" placeholder="请输入存放量(t/d)">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        危险废物处置单位名称
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input nz-input formControlName="wasteDisposalUnit" [(ngModel)]="data.wasteDisposalUnit" placeholder="请输入危险废物处置单位名称">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        危险废物运输单位名称
+      </td>
+      <td colspan="2">
+        <nz-form-control>
+        <input nz-input formControlName="wasteTransportationUnit" [(ngModel)]="data.wasteTransportationUnit" placeholder="请输入危险废物运输单位名称">
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">危废委托处理合同</td>
+      <td>
+        <nz-form-control>
+        <nz-select formControlName="wasteContract" [(ngModel)]="data.wasteContract" nzPlaceHolder="请选择" style="width:100%;">
+          <nz-option nzValue="1" nzLabel="有"></nz-option>
+          <nz-option nzValue="0" nzLabel="无"></nz-option>
+        </nz-select>
+        </nz-form-control>
+      </td>
+      <td>
+        <button nz-button nzType="default">预览(0)</button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">转运五联单</td>
+      <td>
+        <nz-form-control>
+        <nz-select formControlName="transshipmentDuplicate" [(ngModel)]="data.transshipmentDuplicate" nzPlaceHolder="请选择" style="width:100%;">
+          <nz-option nzValue="1" nzLabel="有"></nz-option>
+          <nz-option nzValue="0" nzLabel="无"></nz-option>
+        </nz-select>
+        </nz-form-control>
+      </td>
+      <td>
+        <button nz-button nzType="default">预览(0)</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+<div class="nextStep">
+  <button nz-button nzType="primary" (click)="save()">保存</button>
+  <button nz-button (click)="next()">下一步</button>
+</div>

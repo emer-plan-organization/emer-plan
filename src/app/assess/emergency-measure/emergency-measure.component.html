@@ -1,0 +1,88 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th>环境风险单元</th>
+			<th>风险单元类别</th>
+			<th>设计能力/储量(吨)</th>
+			<th>涉及的化学物质</th>
+			<th>来源</th>
+			<th>目前数量(吨)</th>
+			<th>总量(吨)</th>
+			<th>描述</th>
+			<th>现有风险防控与应急措施</th>
+			<th>日常管理维护</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+				<col/>
+	  		<col/>
+				<col/>
+				<col/>
+				<col/>
+	  		<col/>
+	  		<col/>
+	  	</colgroup>
+	    <tbody>
+			<ng-container *ngFor="let item of tableData;index as i">
+				<ng-container *ngFor="let cItem of item.childList;index as j">
+					<tr *ngFor="let ccItem of cItem.childList;index as z">
+						<td *ngIf="j==0 && z==0" [attr.rowspan]="getRowSpanNum(item)">
+							{{i+1}}
+						</td>
+						<td *ngIf="j==0 && z==0" [attr.rowspan]="getRowSpanNum(item)">
+							{{item.riskUnitName}}
+						</td>
+						<td *ngIf="j==0 && z==0" [attr.rowspan]="getRowSpanNum(item)">
+							<nz-select [(ngModel)]="item.riskType" style="width: 100%;" nzPlaceHolder="请选择">
+							  <nz-option nzValue="1" nzLabel="生产装置"> </nz-option>
+							  <nz-option nzValue="2" nzLabel="储罐"> </nz-option>
+							  <nz-option nzValue="3" nzLabel="库房"> </nz-option>
+							  <nz-option nzValue="4" nzLabel="处理处置装置"> </nz-option>
+							  <nz-option nzValue="5" nzLabel="公用设施"> </nz-option>
+							  <nz-option nzValue="6" nzLabel="其他"> </nz-option>
+							</nz-select>
+						</td>
+						<td *ngIf="j==0 && z==0" [attr.rowspan]="getRowSpanNum(item)">
+							<input type="text" nz-input [(ngModel)]="item.reserves" placeholder="设计能力/储量">
+						</td>
+						<td *ngIf="z==0" [attr.rowspan]="cItem.childList.length">
+							{{cItem.stanceName}}
+						</td>
+						<td>
+							{{ccItem.category}}
+						</td>
+						<td>
+							{{ccItem.currentNumber}}
+						</td>
+						<td *ngIf="z==0" [attr.rowspan]="cItem.childList.length">
+							{{getTotalNumber(cItem)}}
+						</td>
+						<td *ngIf="j==0 && z==0" [attr.rowspan]="getRowSpanNum(item)">
+							<textarea nz-input rows="3" [(ngModel)]="item.describes" placeholder="请说明环境风险单元用途、特征、危险性、曾发生事故等具体情况说明"></textarea>
+						</td>
+						<td *ngIf="j==0 && z==0" [attr.rowspan]="getRowSpanNum(item)">
+							
+							<textarea nz-input rows="5" [(ngModel)]="item.emergencyMeasure" placeholder="请从截流措施、事故排水收集措施、清净下水系统防控措施、雨排水系统防控措施、生产废水处理系统防控措施、毒性气体泄漏紧急处置装置情况、毒性气体泄漏监控预警措施、环评及批复的风险防控措施落实情况进行填写"></textarea>
+						</td>
+						<td *ngIf="j==0 && z==0" [attr.rowspan]="getRowSpanNum(item)">
+							<textarea nz-input rows="3" [(ngModel)]="item.routineMaintenance" placeholder="日常管理维护情况说明"></textarea>
+						</td>
+					</tr>
+				</ng-container>
+			</ng-container>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

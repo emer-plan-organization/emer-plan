@@ -1,0 +1,49 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th>风险物质名称</th>
+			<th>CAS号</th>
+			<th>年最大存在量w(吨)</th>
+			<th>临界量w(吨)</th>
+			<th>涉及环境风险单元</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+	  		<col width="80px"/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+	  		<col/>
+	  	</colgroup>
+	    <tbody>
+	  		<tr *ngFor="let item of tableData;index as i">
+				<td>{{i+1}}</td>
+				<td>
+					{{item.mainIngredient}}
+				</td>
+				<td>
+					{{item.casNumber}}
+				</td>
+				<td>
+					<input type="text" nz-input [(ngModel)]="item.yearMaxNumber" placeholder="请输入年最大存在量w">
+				</td>
+				<td>
+					{{item.criticalAmount}}
+				</td>
+				<td>
+					{{item.riskUnitName}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
+</div>

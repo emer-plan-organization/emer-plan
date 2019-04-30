@@ -1,0 +1,24 @@
+<form nz-form [formGroup]="validateForm">
+  <table class="customTable">
+    <tbody>
+    <tr>
+      <td style="width:240px;">生产工艺说明</td>
+      <td>
+        <nz-form-control>
+          <textarea nz-input rows="10" formControlName="craftsDesc" [(ngModel)]="data.craftsDesc" placeholder="企业生产工艺具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>生产工艺流程图</td>
+      <td>
+        <button nz-button nzType="default">预览(0)</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+<div class="nextStep">
+  <button nz-button nzType="primary" (click)="save()">保存</button>
+  <button nz-button (click)="next()">下一步</button>
+</div>

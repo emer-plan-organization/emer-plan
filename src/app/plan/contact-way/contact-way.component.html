@@ -1,0 +1,47 @@
+<table class="customTable">
+	<thead>
+		<tr>
+			<th width="80px">序号</th>
+			<th>环境风险受体名称</th>
+			<th width="150px">联系人</th>
+			<th width="150px">联系电话</th>
+			<th width="150px">本企业负责人</th>
+			<th width="80px">操作</th>
+			<th width="17px"></th>
+		</tr>
+	</thead>
+</table>
+<div class="scrollHeight">
+	<table class="customTable">
+		<colgroup>
+				<col width="80px"/>
+				<col/>
+	  		<col width="150px"/>
+	  		<col width="150px"/>
+				<col width="150px"/>
+	  		<col width="80px"/>
+	  	</colgroup>
+	    <tbody>
+				<tr>
+					<td>1</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+						<nz-select nzMode="multiple" style="width:100%;" nzPlaceHolder="请输入">
+							<nz-option [nzValue]="1" nzLabel="111"></nz-option>
+							<nz-option [nzValue]="2" nzLabel="2222"></nz-option>
+						</nz-select>
+					</td>
+					<td>
+						<img src="/assets/img/add.png" class="operImg"/>
+						<img src="/assets/img/del.png" class="operImg"/>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+</div>
+<div class="nextStep">
+	<button nz-button nzType="primary">保存</button>
+	<button nz-button>下一步</button>
+</div>

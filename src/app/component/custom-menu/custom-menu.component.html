@@ -1,0 +1,48 @@
+<!--<div *ngFor="let menu of menuList;index as i;">
+	{{menu.title}}****{{i}}
+</div>-->
+
+<ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="nzInlineCollapsed" class="customMenu">
+	<li nz-submenu [nzOpen]="getIsOpen(menu.data.isOpen,menu.data.key)" *ngFor="let menu of menuList;index as i" (nzOpenChange)="menuOpenChange(i)">
+		<span title>
+			<i nz-icon type="insurance"></i>
+			<!-- <i nz-icon class="icon-unComplete"></i> -->
+			<span>{{menu.data.title}}</span>
+		</span>
+		<ul *ngIf="menu.children && menu.children.length>0">
+			<li nz-menu-item *ngFor="let subMenu of menu.children" [nzSelected]="getIsOpen(false,subMenu.data.key)">
+				<a (click)="toUrl(menu.path+'/'+subMenu.path)">{{subMenu.data.title}}</a>
+			</li>
+		</ul>
+	</li>
+</ul>
+
+<!--<ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="nzInlineCollapsed">
+	<li nz-submenu>
+		<span title><i nz-icon type="user"></i><span>subnav 1</span></span>
+		<ul>
+			<li nz-menu-item><a routerLink="survey/companyBase/{{id}}">option1</a></li>
+			<li nz-menu-item>option2</li>
+			<li nz-menu-item>option3</li>
+			<li nz-menu-item>option4</li>
+		</ul>
+	</li>
+	<li nz-submenu>
+		<span title><i nz-icon type="laptop"></i><span>subnav 2</span></span>
+		<ul>
+			<li nz-menu-item>option5</li>
+			<li nz-menu-item>option6</li>
+			<li nz-menu-item>option7</li>
+			<li nz-menu-item>option8</li>
+		</ul>
+	</li>
+	<li nz-submenu>
+		<span title><i nz-icon type="notification"></i><span>subnav 3</span></span>
+		<ul>
+			<li nz-menu-item>option9</li>
+			<li nz-menu-item>option10</li>
+			<li nz-menu-item>option11</li>
+			<li nz-menu-item>option12</li>
+		</ul>
+	</li>
+</ul>-->

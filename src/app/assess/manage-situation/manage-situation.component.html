@@ -1,0 +1,181 @@
+<form nz-form [formGroup]="validateForm">
+  <table class="customTable">
+    <thead>
+    <tr>
+      <th width="100px">项目</th>
+      <th colspan="2">内容</th>
+      <th>备注</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td rowspan="2">消防验收</td>
+      <td>消防验收意见</td>
+      <td>
+        <nz-form-control>
+          <nz-radio-group formControlName="FireAccepting" [(ngModel)]="data.FireAccepting">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </td>
+      <td rowspan="2">
+        <nz-form-control>
+          <textarea nz-input formControlName="FireAcceptingRemark" [(ngModel)]="data.FireAcceptingRemark" rows="5"
+                    placeholder="补充说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>最近一次消防检查</td>
+      <td>
+        <nz-form-control>
+          <nz-radio-group formControlName="LastFireResult" [(ngModel)]="data.LastFireResult">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="2">安全生产许可</td>
+      <td>危险化学品生产企业</td>
+      <td>
+        <nz-form-control>
+          <nz-radio-group formControlName="IsDanger" [(ngModel)]="data.IsDanger">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </td>
+      <td rowspan="2">
+        <nz-form-control>
+          <textarea nz-input formControlName="ProductionSafetyRemark" [(ngModel)]="data.ProductionSafetyRemark" rows="5"
+                    placeholder="补充说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>取得安全生产许可</td>
+      <td>
+        <nz-form-control>
+          <nz-radio-group formControlName="IsSafeLicense" [(ngModel)]="data.IsSafeLicense">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="2">危险化学品安全评价</td>
+      <td>开展危险化学品安全评价</td>
+      <td>
+        <nz-form-control>
+          <nz-radio-group formControlName="IsDangerSafe" [(ngModel)]="data.IsDangerSafe">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </td>
+      <td rowspan="2">
+        <nz-form-control>
+          <textarea nz-input formControlName="HazardousChemicalsRemark" [(ngModel)]="data.HazardousChemicalsRemark"
+                    rows="5" placeholder="补充说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>通过安全设施竣工验收</td>
+      <td>
+        <nz-form-control>
+          <nz-radio-group formControlName="IsSafeCompletion" [(ngModel)]="data.IsSafeCompletion">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="3">危险化学品重大危险源备案</td>
+      <td>无重大危险源</td>
+      <td>
+        <nz-form-control>
+          <nz-radio-group formControlName="NoMajorHazard" [(ngModel)]="data.NoMajorHazard" (ngModelChange)="NoMajorHazardChange($event)">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </td>
+      <td rowspan="3">
+        <nz-form-control>
+          <textarea nz-input formControlName="NoMajorHazardRemark" [(ngModel)]="data.NoMajorHazardRemark" rows="5"
+                    placeholder="补充说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>所有危险化学品重大危险源均已备案</td>
+      <td>
+        <nz-form-control>
+          <nz-radio-group formControlName="NoMajorHazardRecord" [(ngModel)]="data.NoMajorHazardRecord" (ngModelChange)="NoMajorHazardRecordChange($event)">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>有危险化学品重大危险源未备案</td>
+      <td>
+        <nz-form-control>
+          <nz-radio-group formControlName="NoMajorHazardNoRecord" [(ngModel)]="data.NoMajorHazardNoRecord" (ngModelChange)="NoMajorHazardNoRecordChange($event)">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td>安全生产管理制度</td>
+      <td colspan="3">
+        <nz-form-control>
+          <textarea nz-input formControlName="SafetySystem" [(ngModel)]="data.SafetySystem" rows="5"
+                    placeholder="具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="3">安全生产培训情况</td>
+      <td colspan="2">企业安全培训管理制度</td>
+      <td>
+        <nz-form-control>
+          <textarea nz-input formControlName="SafetyTrainingManage" [(ngModel)]="data.SafetyTrainingManage" rows="5"
+                    placeholder="具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">培训计划</td>
+      <td>
+        <nz-form-control>
+          <textarea nz-input formControlName="TrainingProgram" [(ngModel)]="data.TrainingProgram" rows="5"
+                    placeholder="具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">培训记录</td>
+      <td>
+        <nz-form-control>
+          <textarea nz-input formControlName="TrainingRecord" [(ngModel)]="data.TrainingRecord" rows="5"
+                    placeholder="具体情况说明"></textarea>
+        </nz-form-control>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+<div class="nextStep">
+  <button nz-button nzType="primary" (click)="save()">保存</button>
+  <button nz-button (click)="next()">下一步</button>
+</div>

@@ -1,0 +1,26 @@
+<nz-layout class="layout" style="height:100%; overflow: hidden;">
+	<nz-header style="background:#fff;box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);margin-bottom:5px;">
+		<div style="height:100%;width:30px;float:left;">
+			<i class="trigger" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'" (click)="isCollapsed=!isCollapsed"></i>
+		</div>
+		<div class="logo" style="float:left;">
+			<!-- <img src="/assets/img/log.png"/> -->
+		</div>
+		<p style="float: left; font-size: 18px; color: rgb(153, 153, 153); padding-left: 10px;margin: 0px;">
+			<!-- 环境应急资源调查 -->
+		</p>
+	</nz-header>
+	<nz-layout style="height:100%;">
+		<nz-sider [nzWidth]="300"  nzCollapsible [(nzCollapsed)]="isCollapsed"  [nzBreakpoint]="'lg'" [nzTrigger]="triggerTemplate" style="background:#fff"> 
+			<app-custom-menu
+				[id]="id"
+				[menuList]="menuList"
+				[nzInlineCollapsed]="isCollapsed"
+			></app-custom-menu>
+		</nz-sider>
+		<nz-content style="height:100%;overflow-y:scroll;background-color:#ffffff;padding: 10px;">
+			<router-outlet #surveyRouter="outlet"></router-outlet>
+			<!--name="surveyRouter"-->
+		</nz-content>
+	</nz-layout>
+</nz-layout>
