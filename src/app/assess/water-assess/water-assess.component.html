@@ -20,79 +20,116 @@
 			<col />
 		</colgroup>
 		<tbody>
+			<ng-container *ngFor="let item of tableData.evaluateDetails;index as i">
+				<tr *ngFor="let cItem of item.basisList;index as j">
+					<td *ngIf="j==0" [attr.rowspan]="item.basisList.length">
+						{{i}}{{item.evaluateIndex}}
+					</td>
+					<td>
+						{{cItem.basisContent}}
+					</td>
+					<td *ngIf="cItem.isMergeScore==0" [attr.colspan]="cItem.isEvaluate==0?'3':1" [attr.rowspan]="cItem.isMergeScore==0?cItem.mergeNumber:1">
+						<ng-container *ngIf="cItem.isEvaluate==1">
+							{{cItem.score}}
+						</ng-container>
+						<ng-container *ngIf="cItem.isEvaluate==0">
+							/
+						</ng-container>
+					</td>
+					<td *ngIf="cItem.isEvaluate==1">
+						<ng-container *ngIf="i==4&&j==1">
+							/
+						</ng-container>
+						<ng-container *ngIf="i!=4 || j!=1">
+							<nz-radio-group [(ngModel)]="cItem.evaluateResult" (ngModelChange)="onEvaluateResultChange(item,i,j,$event)" [nzDisabled]="(i==7&&j==3) || (i==5 && j>0 && item.basisList[0].evaluateResult=='1')">
+								<label nz-radio nzValue="1">是</label>
+								<label nz-radio nzValue="0">否</label>
+							</nz-radio-group>
+						</ng-container>
+					
+					</td>
+					<td *ngIf="cItem.isMergeActual==0&&i==0" [attr.rowspan]="item.basisList.length-1">
+						{{cItem.actualScore}}
+					</td>
+					<td *ngIf="cItem.isMergeActual==0&&i!=0" [attr.rowspan]="i!=7?item.basisList.length:1">
+						{{cItem.actualScore}}
+					</td>
+				</tr>
+
+			</ng-container>
 			<tr>
-				<td rowspan="10">
-					事故废水收集措施
+				<td colspan="3">
+						小计得分
+				</td>
+				<td>
+					<button nz-button nzType="primary" (click)="totalScoreSalculate()">计算</button>
+				</td>
+				<td >
+					{{tableData.totalScore}}
 				</td>
 			</tr>
 			<tr>
-				<td>
-					（1）按相关设计规范设置应急事故水池；
+				<td colspan="3">
+						生产工艺过程与环境风险控制水平值（M）
 				</td>
-				<td colspan="" rowspan="8"></td>
-				<td></td>
-				<td rowspan="10"></td>
+				<td>
+					<button nz-button nzType="primary" (click)="levelValueCalculate()">计算</button>
+				</td>
+				<td >
+					{{tableData.levelValue}}
+				</td>
 			</tr>
 			<tr>
+				<td colspan="4">
+					生产工艺过程与环境风险控制水平类型
+				</td>
 				<td>
-					<div>
-						按相关设计规范设置事故存液池；
+					{{tableData.levelType}}
+				</td>
+			</tr>
+			<!-- <tr>
+				<td colspan="3">
+					<div class="ivu-table-cell">
+						小计得分
 					</div>
 				</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>或按相关设计规范设置清净废水排放缓冲池；</td>
-				<td></td>
-			</tr>
-			<tr>
 				<td>
-					并根据相关设计规范、下游环境风险受体敏感程度和易发生极端天气情况，设计事故排水收集设施的容量；且
+					<div class="ivu-table-cell">
+						<button nz-button nzType="primary" (click)="totalScoreSalculate()">计算</button>
+					</div>
 				</td>
 				<td>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					（2）确保事故排水收集设施在事故状态下能顺利收集泄漏物和消防水；
-				</td>
-				<td>
+					<div class="ivu-table-cell">
+						{{tableData.totalScore}}
+					</div>
 				</td>
 			</tr>
 			<tr>
-				<td>
-					日常保持足够的事故排水缓冲容量；且
+				<td colspan="2">
+					<div class="ivu-table-cell">
+						生产工艺过程与环境风险控制水平值（M）
+					</div>
 				</td>
 				<td>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					（3）通过协议单位能将所收集废水送至厂区内污水处理设施处理
+					<div class="ivu-table-cell">
+						{{tableData.levelValue}}
+					</div>
 				</td>
 				<td>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					或通过自建管线，能将所收集废水送至厂区内污水处理设施处理
+					<div class="ivu-table-cell">
+						生产工艺过程与环境风险控制水平类型
+					</div>
 				</td>
 				<td>
+					<div class="ivu-table-cell">
+						{{tableData.levelType}}
+					</div>
 				</td>
-			</tr>
-			<tr>
-				<td>
-					有任意一个环境风险单元（包括可能发生液体泄漏或产生液体泄漏物的危险废物贮存场所）的事故排水收集措施不符合上述任意一条要求的
-				</td>
-				<td colspan="" rowspan="1">
-				</td>
-				<td>
-				</td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
 </div>
 <div class="nextStep">
-	<button nz-button nzType="primary">保存</button>
-	<button nz-button>下一步</button>
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
 </div>

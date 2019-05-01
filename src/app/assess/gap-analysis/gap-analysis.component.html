@@ -31,50 +31,63 @@
 				<col width="80px"/>
 	  	</colgroup>
 	    <tbody>
-				<tr>
-					<td rowspan="3">（一）环境风险管理制度</td>
-					<td>1.环境风险防控和应急措施制度是否建立；</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+			<ng-container *ngFor="let item of tableData;index as i">
+				<tr *ngFor="let cItem of item.childList;index as j">
+					<td *ngIf="j==0" [attr.rowspan]="item.childList.length">
+						{{item.projectName}}
+					</td>
 					<td>
-						<img src="/assets/img/addn.png" class="operImg"/>
-						<img src="/assets/img/del.png" class="operImg"/>
+						<textarea nz-input [(ngModel)]="cItem.itemContent" *ngIf="cItem.projectId!='0'" rows="5" placeholder="具体分析内容"></textarea>
+						<ng-container  *ngIf="cItem.projectId=='0'">
+							{{cItem.itemContent}}
+						</ng-container>
+					</td>
+					<td>
+						<nz-select [(ngModel)]="cItem.have" style="width: 100%;" nzPlaceHolder="请选择">
+							<nz-option nzValue="1" nzLabel="是"></nz-option>
+							<nz-option nzValue="0" nzLabel="否"></nz-option>
+						</nz-select>
+					</td>
+					<td>
+						<textarea nz-input [(ngModel)]="cItem.problem" rows="5" placeholder="具体情况说明"></textarea>
+					</td>
+					<td>
+						<nz-select [(ngModel)]="cItem.needFix" (ngModelChange)="onNeedFixChange(cItem,$event)" style="width: 100%;" nzPlaceHolder="请选择">
+							<nz-option nzValue="1" nzLabel="是"></nz-option>
+							<nz-option nzValue="0" nzLabel="否"></nz-option>
+						</nz-select>
+					</td>
+					<td>
+						<nz-date-picker [(ngModel)]="cItem.governDate" *ngIf="cItem.needFix!='0'" placeholder="请选择时间" style="width:100%;"></nz-date-picker>
+						<ng-container  *ngIf="cItem.needFix=='0'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<nz-select [(ngModel)]="cItem.governPeriod" *ngIf="cItem.needFix!='0'" style="width: 100%;" nzPlaceHolder="请选择">
+							<nz-option nzValue="短期" nzLabel="短期"></nz-option>
+							<nz-option nzValue="中期" nzLabel="中期"></nz-option>
+							<nz-option nzValue="长期" nzLabel="长期"></nz-option>
+						</nz-select>
+						<ng-container  *ngIf="cItem.needFix=='0'">
+							{{cItem.governPeriod}}
+						</ng-container>
+					</td>
+					<td>
+						<textarea nz-input [(ngModel)]="cItem.checkResultDesc" rows="5" placeholder="具体情况说明"></textarea>
+					</td>
+					<td>
+						<img src="/assets/img/add.png" class="operImg" *ngIf="j==item.childList.length-1" (click)="addChildren(i)"/>
+						<img src="/assets/img/addn.png" class="operImg" *ngIf="j<item.childList.length-1"/>
+						<img src="/assets/img/del.png" class="operImg" *ngIf="cItem.projectId!='0'" (click)="delChildren(i,j)"/>
+						<img src="/assets/img/deln.png" class="operImg" *ngIf="cItem.projectId=='0'"/>
 					</td>
 				</tr>
-				<tr>
-					<td>2.环境风险防控重点岗位的责任人是否明确；</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>
-						<img src="/assets/img/addn.png" class="operImg"/>
-						<img src="/assets/img/del.png" class="operImg"/>
-					</td>
-				</tr>
-				<tr>
-					<td>3.环境风险防控责任机构是否明确；</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>
-						<img src="/assets/img/add.png" class="operImg"/>
-						<img src="/assets/img/del.png" class="operImg"/>
-					</td>
-				</tr>
+			</ng-container>
 		</tbody>
 	</table>
 </div>
 <div class="nextStep">
-	<button nz-button nzType="primary">保存</button>
-	<button nz-button>下一步</button>
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
 </div>

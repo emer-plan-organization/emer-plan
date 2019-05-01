@@ -10,7 +10,7 @@
 			<th rowspan="2">整改措施</th>
 			<th colspan="2">负责人</th>
 			<th colspan="2">整改期限</th>
-			<th colspan="2" width="17px"></th>
+			<th rowspan="2" width="17px"></th>
 		</tr>
 		<tr>
 			<th>姓名</th>
@@ -36,50 +36,104 @@
 			<col />
 		</colgroup>
 		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>
-					<nz-select nzMode="multiple" style="width:100%;" nzPlaceHolder="请选择">
-						<nz-option [nzValue]="1" nzLabel="111"></nz-option>
-						<nz-option [nzValue]="2" nzLabel="222"></nz-option>
-						<nz-option [nzValue]="3" nzLabel="333"></nz-option>
-					</nz-select>
-				</td>
-				<td>
-					<nz-select nzMode="multiple" style="width:100%;" nzPlaceHolder="请选择">
-						<nz-option [nzValue]="1" nzLabel="111"></nz-option>
-						<nz-option [nzValue]="2" nzLabel="222"></nz-option>
-						<nz-option [nzValue]="3" nzLabel="333"></nz-option>
-					</nz-select>
-				</td>
-				<td>
-					<nz-select nzMode="multiple" style="width:100%;" nzPlaceHolder="请选择">
-						<nz-option [nzValue]="1" nzLabel="111"></nz-option>
-						<nz-option [nzValue]="2" nzLabel="222"></nz-option>
-						<nz-option [nzValue]="3" nzLabel="333"></nz-option>
-					</nz-select>
-				</td>
-				<td>
-					<textarea nz-input rows="5" placeholder="具体情况说明"></textarea>
-				</td>
-				<td>
-					<nz-select nzMode="multiple" style="width:100%;" nzPlaceHolder="请选择">
-						<nz-option [nzValue]="1" nzLabel="张三"></nz-option>
-						<nz-option [nzValue]="2" nzLabel="李四"></nz-option>
-					</nz-select>
-				</td>
-				<td>
-					<input nz-input [disabled]="true" placeholder="">
-				</td>
-				<td></td>
-				<td></td>
-			</tr>
+			<ng-container *ngFor="let item of tableData;index as i">
+				<tr *ngFor="let cItem of item.childList;index as j">
+					<td *ngIf="j==0" [attr.rowspan]="item.childList.length">
+						{{item.projectName}}
+					</td>
+					<td>
+						<ng-container *ngIf="cItem.needFix=='1'">
+							{{cItem.itemContent}}
+						</ng-container>
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<ng-container *ngIf="cItem.needFix=='1'">
+							{{cItem.problem}}
+						</ng-container>
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<nz-select nzMode="multiple" [(ngModel)]="cItem.environmentalRiskUnitArray" *ngIf="cItem.needFix=='1'" style="width:100%;" nzPlaceHolder="请选择">
+							<nz-option [nzValue]="environmentalRiskUnit.riskUnitName" [nzLabel]="environmentalRiskUnit.riskUnitName" *ngFor="let environmentalRiskUnit of environmentalRiskUnitList"></nz-option>
+						</nz-select>
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<nz-select nzMode="multiple" [(ngModel)]="cItem.riskSubstancesArray" *ngIf="cItem.needFix=='1'" style="width:100%;" nzPlaceHolder="请选择">
+							<nz-option [nzValue]="riskSubstances.mainIngredient" [nzLabel]="riskSubstances.mainIngredient" *ngFor="let riskSubstances of riskSubstancesList"></nz-option>
+						</nz-select>
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<nz-select nzMode="multiple" [(ngModel)]="cItem.riskReceptorArray" *ngIf="cItem.needFix=='1'" style="width:100%;" nzPlaceHolder="请选择">
+							<nz-option [nzValue]="riskReceptor.pointName" [nzLabel]="riskReceptor.pointName" *ngFor="let riskReceptor of riskReceptorList"></nz-option>
+						</nz-select>
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<textarea nz-input rows="5" [(ngModel)]="cItem.rectificationMeasures" *ngIf="cItem.needFix=='1'" placeholder="具体情况说明"></textarea>
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<ng-container *ngIf="cItem.needFix=='1'">
+							<input
+								placeholder="请输入负责人"
+								nz-input
+								[(ngModel)]="cItem.name"
+								(input)="onNameInput($event.target?.value)"
+								[nzAutocomplete]="auto"
+							/>
+							<nz-autocomplete nzBackfill #auto>
+								<nz-auto-option *ngFor="let person of personList1" (selectionChange)="onNameChange(cItem,person)" [nzValue]="person.personName">
+								  {{ person.personName }}
+								</nz-auto-option>
+							</nz-autocomplete>
+						</ng-container>
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<input nz-input [(ngModel)]="cItem.telephone" *ngIf="cItem.needFix=='1'" placeholder="">
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<ng-container *ngIf="cItem.needFix=='1'">
+							{{cItem.governDate}}
+						</ng-container>
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+					<td>
+						<ng-container *ngIf="cItem.needFix=='1'">
+							{{cItem.governPeriod}}
+						</ng-container>
+						<ng-container *ngIf="cItem.needFix!='1'">
+							/
+						</ng-container>
+					</td>
+				</tr>
+			</ng-container>
 		</tbody>
 	</table>
 </div>
 <div class="nextStep">
-	<button nz-button nzType="primary">保存</button>
-	<button nz-button>下一步</button>
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
 </div>

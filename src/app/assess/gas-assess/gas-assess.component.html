@@ -20,77 +20,81 @@
 				<col/>
 	  	</colgroup>
 	    <tbody>
-				<tr>
-					<td rowspan="3">毒性气体泄漏监控预警措施</td>
+			<ng-container *ngFor="let item of tableData.evaluateDetails;index as i">
+				<tr *ngFor="let cItem of item.basisList;index as j">
+					<td *ngIf="j==0" [attr.rowspan]="item.basisList.length">
+						{{item.evaluateIndex}}
+					</td>
 					<td>
-						（1）不涉及《企业突发环境事件风险分级方法》附录A1中有毒有害气体的；或
+						<ng-container *ngIf="cItem.isDisplayNumber==1">({{cItem.basisNumber}})</ng-container>
+						<ng-container *ngIf="cItem.isDisplayNumber==0">&nbsp;&nbsp;&nbsp;</ng-container>
+						{{cItem.basisContent}}
 					</td>
-					<td rowspan="2"></td>
-					<td></td>
-					<td rowspan="3"></td>
+					<td *ngIf="cItem.isMergeScore==0" [attr.rowspan]="cItem.mergeNumber">
+						{{cItem.score}}
+					</td>
+					<td>
+						<nz-radio-group [(ngModel)]="cItem.evaluateResult" (ngModelChange)="onEvaluateResultChange(cItem,i,j,$event)">
+						  <label nz-radio nzValue="1">是</label>
+						  <label nz-radio nzValue="0">否</label>
+						</nz-radio-group>
+					</td>
+					<td *ngIf="cItem.isMergeActual==1||i==2" [attr.rowspan]="cItem.isMergeActual=='1'&&i!=2?item.basisList.length:1">
+							{{cItem.actualScore}}
+					</td>
 				</tr>
-				<tr>
-					<td>（2）根据实际情况，具备有毒有害气体（如硫化氢、氰化氢、氯化氢、光气、氯气、氨气、苯等）厂界泄漏监控预警系统的</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>不具备厂界有毒有害气体泄漏监控预警系统的</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td rowspan="2">符合防护距离情况</td>
-					<td>符合环评及批复文件防护距离要求的</td>
-					<td></td>
-					<td></td>
-					<td rowspan="2"></td>
-				</tr>
-				<tr>
-					<td>不符合环评及批复文件防护距离要求的</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td rowspan="4">近3年内突发大气环境事件发生情况</td>
-					<td>发生过特别重大或重大等级突发大气环境事件的</td>
-					<td></td>
-					<td></td>
-					<td rowspan="4"></td>
-				</tr>
-				<tr>
-					<td>发生过较大等级突发大气环境事件的</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>发生过一般等级突发大气环境事件的</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>未发生突发大气环境事件的</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="4">小计得分</td>
-					<td colspan="2"></td>
-				</tr>
-				<tr>
-					<td colspan="4">生产工艺过程与环境风险控制水平值(M)</td>
-					<td colspan="2"></td>
-				</tr>
-				<tr>
-					<td colspan="4">
+			</ng-container>
+			<tr>
+				<td colspan="3">
+						小计得分
+				</td>
+				<td>
+					<button nz-button nzType="primary" (click)="totalScoreSalculate()">计算</button>
+				</td>
+				<td >
+					{{tableData.totalScore}}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+						生产工艺过程与环境风险控制水平值（M）
+				</td>
+				<td>
+					<button nz-button nzType="primary" (click)="levelValueCalculate()">计算</button>
+				</td>
+				<td >
+					{{tableData.levelValue}}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					生产工艺过程与环境风险控制水平类型
+				</td>
+				<td>
+					{{tableData.levelType}}
+				</td>
+			</tr>
+			<!-- <tr>
+				<td>
+						生产工艺过程与环境风险控制水平值（ M）
+				</td>
+				<td>
+					<button nz-button nzType="primary" (click)="levelValueCalculate()">计算</button>
+				</td>
+				<td >
+					{{tableData.levelValue}}
+				</td>
+				<td>
 						生产工艺过程与环境风险控制水平类型
-						<button nz-button nzType="primary">计算</button>
-					</td>
-					<td colspan="2"></td>
-				</tr>
+				</td>
+				<td>
+					{{tableData.levelType}}
+				</td>
+			</tr> -->
 		</tbody>
 	</table>
 </div>
 <div class="nextStep">
-	<button nz-button nzType="primary">保存</button>
-	<button nz-button>下一步</button>
+	<button nz-button nzType="primary" (click)="save()">保存</button>
+	<button nz-button (click)="next()">下一步</button>
 </div>
